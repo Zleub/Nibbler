@@ -9,15 +9,21 @@ CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra
 
 INC		=	-Iinc -I../../inc
-INC		+=	-Iext/SFML-2.2/include
-INC		+=	-Iext/lua-5.3.0/src/
+INC		+=	-I../../ext/SFML-2.2/include
+INC		+=	-I../../ext/lua-5.3.0/src/
+
+LIBS	=	-L../../ext/SFML-2.2/lib
+LIBS	+=	-lsfml-graphics
+LIBS	+=	-lsfml-window
+LIBS	+=	-lsfml-system
+LIBS	+=	-lsfml-audio
 
 .PHONY: all re clean fclean
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -shared -fPIC -o $@ $^ -rpath ext/SFML-2.2/extlibs
+	$(CC) -shared -fPIC -o $@ $^ $(LIBS) #-rpath ../../ext/SFML-2.2/extlibs
 
 %.o: %.cpp
 	$(CC) $(FLAGS) -o $@ -c $< $(INC)

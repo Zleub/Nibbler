@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 07:42:13
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:06:58
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -21,6 +21,7 @@
 
 class Nibbler : public AGlib {
 private:
+	sf::RenderWindow	*_window;
 public:
 	Nibbler(Nibbler const &);
 	Nibbler(void);
@@ -28,7 +29,9 @@ public:
 
 	virtual AGlib &	operator=(AGlib const &);
 
-	virtual void init(void);
+	virtual void		init(void);
+	virtual void		update(void);
+	virtual bool		isOpen(void);
 };
 
 #endif

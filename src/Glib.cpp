@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:03:34
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 07:39:31
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:12:41
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -40,6 +40,7 @@ Glib::Glib(std::string lib)
 		throw Glib::Exception();
 	_create_t = (create_t *)(dlsym(_dl_handle, "create"));
 	_destroy_t = (destroy_t *)(dlsym(_dl_handle, "destroy"));
+	_gl_handle = _create_t();
 }
 
 Glib::~Glib()
@@ -49,5 +50,15 @@ Glib::~Glib()
 
 void	Glib::init(void) const
 {
-	this->_gl_handle->init();
+	_gl_handle->init();
+}
+
+void	Glib::update(void)
+{
+	_gl_handle->update();
+}
+
+bool	Glib::isOpen(void)
+{
+	return _gl_handle->isOpen();
 }

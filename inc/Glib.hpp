@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:05:12
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 07:38:53
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:10:59
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -36,6 +36,8 @@ public:
 	~Glib(void);
 
 	void		init(void) const ;
+	void		update(void) ;
+	bool		isOpen(void) ;
 };
 
 #endif

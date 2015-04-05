@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 02:55:28
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:13:37
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -20,24 +20,17 @@
 
 int	main(void)
 {
+	Glib *		p;
+
 	try {
-		Glib test;
+		p = new Glib;
 	} catch (std::exception & e) {
 		std::cerr << e.what() << std::endl;
 		exit(-1);
 	}
 
-	// void(*shit)(void) = (void(*)(void))dlsym(dl_handle, "print_shit");
-	// if (!shit)
-	// 	dlerror_wrapper();
-
-	std::cout << "Hello World" << std::endl;
-
-	// shit();
-
-	// new game
-	// update game
-	// draw game
-
+	p->init();
+	while (p->isOpen())
+		p->update();
 	return (0);
 }
