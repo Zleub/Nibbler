@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:21:55
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 02:50:18
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:41:50
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -24,5 +24,5 @@ Glib::Exception::Exception() {}
 Glib::Exception::~Exception() throw() {}
 
 const char * Glib::Exception::what() const throw() {
-	return dlerror();
+	return "Glib::Exception";
 }

@@ -2,11 +2,11 @@
 //      ./shddddddddhs+.
 //    :yddddddddddddddddy:
 //  `sdddddddddddddddddddds`
-//  ydddh+sdddddddddy+ydddds  Nibbler:Nibbler
+//  ydddh+sdddddddddy+ydddds  Nibbler:SFML
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:44
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:07:26
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:53:11
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -14,23 +14,23 @@
 //          .-::::-`
 
 #include <iostream>
-#include <Nibbler.hpp>
+#include <SFML.hpp>
 
-Nibbler::Nibbler() {}
-Nibbler::~Nibbler() {}
+SFML::SFML() {}
+SFML::~SFML() {}
 
-AGlib &	Nibbler::operator=(AGlib const &)
+AGlib &	SFML::operator=(AGlib const &)
 {
 	return *this;
 }
 
-void		Nibbler::init(void)
+void		SFML::init(void)
 {
-	std::cout << "Nibbler init 1" << std::endl;
+	std::cout << "SFML init 1" << std::endl;
 	_window = new sf::RenderWindow(sf::VideoMode(800, 600), "SFML window");
 }
 
-void		Nibbler::update(void)
+void		SFML::update(void)
 {
 	sf::Event event;
 	while (_window->pollEvent(event))
@@ -44,7 +44,7 @@ void		Nibbler::update(void)
 }
 
 
-bool		Nibbler::isOpen(void)
+bool		SFML::isOpen(void)
 {
 	return _window->isOpen();
 }
@@ -53,7 +53,7 @@ extern "C"
 {
 	AGlib * create()
 	{
-		return new Nibbler;
+		return new SFML;
 	}
 
 	void destroy(AGlib * p)

@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:05:12
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:10:59
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:44:20
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -28,6 +28,9 @@ private:
 	AGlib *		_gl_handle;
 	create_t *	_create_t;
 	destroy_t *	_destroy_t;
+
+	void		raise(void);
+	void		assign(void);
 public:
 	class Exception;
 
@@ -37,7 +40,7 @@ public:
 
 	void		init(void) const ;
 	void		update(void) ;
-	bool		isOpen(void) ;
+	bool		isOpen(void) const ;
 };
 
 #endif

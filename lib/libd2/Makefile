@@ -1,22 +1,21 @@
-NAME =	libd1.so
+NAME =	libd2.so
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	src/test.cpp\
-		src/SFML.cpp\
+SRC =	src/LOVE.cpp\
 		# src/AGlib.cpp\
 
 CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra
 
 INC		=	-Iinc -I../../inc
-INC		+=	-I../../ext/SFML-2.2/include
+#INC		+=	-I../../ext/SFML-2.2/include
 #INC		+=	-I../../ext/lua-5.3.0/src/
 
-LIBS	=	-L../../ext/SFML-2.2/lib
-LIBS	+=	-lsfml-graphics
-LIBS	+=	-lsfml-window
-LIBS	+=	-lsfml-system
-LIBS	+=	-lsfml-audio
+#LIBS	=	-L../../ext/SFML-2.2/lib
+#LIBS	+=	-lsfml-graphics
+#LIBS	+=	-lsfml-window
+#LIBS	+=	-lsfml-system
+#LIBS	+=	-lsfml-audio
 
 .PHONY: all re clean fclean
 

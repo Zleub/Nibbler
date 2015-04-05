@@ -2,30 +2,27 @@
 //      ./shddddddddhs+.
 //    :yddddddddddddddddy:
 //  `sdddddddddddddddddddds`
-//  ydddh+sdddddddddy+ydddds  Nibbler:Nibbler
+//  ydddh+sdddddddddy+ydddds  Nibbler:LOVE
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
-// sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:06:58
+// sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:55:28
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
 //      .+ydddddddddhs/.
 //          .-::::-`
 
-#ifndef NIBBLER_HPP
-#define NIBBLER_HPP
+#ifndef LOVE_HPP
+#define LOVE_HPP
 
-#include <SFML/Graphics.hpp>
 #include <AGlib.hpp>
 
-class Nibbler : public AGlib {
-private:
-	sf::RenderWindow	*_window;
+class LOVE : public AGlib {
 public:
-	Nibbler(Nibbler const &);
-	Nibbler(void);
-	virtual ~Nibbler(void);
+	LOVE(void);
+	LOVE(LOVE const &);
+	virtual ~LOVE(void);
 
 	virtual AGlib &	operator=(AGlib const &);
 
