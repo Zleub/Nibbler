@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 01:01:34
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 02:55:28
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -18,30 +18,22 @@
 
 #include <Glib.hpp>
 
-void	dlerror_wrapper(void)
-{
-	std::cerr << "Error: " << dlerror() << std::endl;
-	exit(-1);
-}
-
 int	main(void)
 {
 	try {
-		Glib test("lib/libd1/libd1");
+		Glib test;
 	} catch (std::exception & e) {
 		std::cerr << e.what() << std::endl;
 		exit(-1);
 	}
 
-
-	void *dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL);
-	void(*shit)(void) = (void(*)(void))dlsym(dl_handle, "print_shit");
-	if (!shit)
-		dlerror_wrapper();
+	// void(*shit)(void) = (void(*)(void))dlsym(dl_handle, "print_shit");
+	// if (!shit)
+	// 	dlerror_wrapper();
 
 	std::cout << "Hello World" << std::endl;
 
-	shit();
+	// shit();
 
 	// new game
 	// update game
