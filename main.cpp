@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:42:00
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-06 23:50:21
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -23,7 +23,7 @@ int	main(void)
 	Glib *		p;
 
 	try {
-		p = new Glib("lib/libd2/libd2.so");
+		p = new Glib;
 	} catch (std::exception & e) {
 		std::cerr << e.what() << std::endl;
 		exit(-1);
@@ -31,6 +31,11 @@ int	main(void)
 
 	p->init();
 	while (p->isOpen())
-		p->update();
+	{
+		// Event e;
+		// while ((e = p->popEvent()))
+			// if (e->content == Glib::ESC);
+			//  exit();
+	}
 	return (0);
 }
