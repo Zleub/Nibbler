@@ -16,7 +16,6 @@
 #ifndef GLIB_EXCEPTION_HPP
 #define GLIB_EXCEPTION_HPP
 
-#include <exception>
 #include <Glib.hpp>
 
 class Glib::Exception : public std::exception {
@@ -25,9 +24,10 @@ public:
 	Exception(Exception const &);
 	~Exception(void) throw();
 
+	virtual char const * what() const throw();
+private:
 	Exception &	operator=(Exception const &);
 
-	virtual char const * what() const throw();
 };
 
 #endif

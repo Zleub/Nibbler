@@ -17,8 +17,6 @@
 #define AGLIB_HPP
 
 class AGlib {
-protected:
-
 public:
 	AGlib(void) {};
 	AGlib(AGlib const &) {};
@@ -27,7 +25,7 @@ public:
 	virtual AGlib &	operator=(AGlib const &) = 0;
 
 	virtual void	init(void) = 0;
-	virtual void	update(void) = 0;
+	virtual void	draw(void) = 0;
 
 	virtual bool	isOpen(void) = 0;
 };

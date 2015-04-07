@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:03:34
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:52:27
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-07 19:17:36
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -20,6 +20,7 @@ extern "C" {
 #include <iostream>
 #include <Glib.hpp>
 #include <Glib_Exception.hpp>
+#include <Glib_Event.hpp>
 
 // Special Members
 
@@ -30,7 +31,6 @@ Glib::Glib(void)
 	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
 		throw Glib::Exception();
 	assign();
-	_gl_handle = _create_t();
 }
 
 Glib::Glib(std::string lib)
@@ -40,7 +40,6 @@ Glib::Glib(std::string lib)
 	if (!(_dl_handle = dlopen(lib.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		throw Glib::Exception();
 	assign();
-	_gl_handle = _create_t();
 }
 
 Glib::~Glib()
@@ -55,10 +54,11 @@ void	Glib::assign(void)
 {
 	_create_t = (create_t *)(dlsym(_dl_handle, "create"));
 	_destroy_t = (destroy_t *)(dlsym(_dl_handle, "destroy"));
-	raise();
+	checkError();
+	_gl_handle = _create_t();
 }
 
-void	Glib::raise(void)
+void	Glib::checkError(void) const
 {
 	const char *	error;
 
@@ -72,17 +72,8 @@ void	Glib::raise(void)
 
 // Public Members
 
-void	Glib::init(void) const
-{
-	_gl_handle->init();
-}
-
-void	Glib::update(void)
-{
-	_gl_handle->update();
-}
-
-bool	Glib::isOpen(void) const
-{
-	return _gl_handle->isOpen();
-}
+void				Glib::init(void) const { _gl_handle->init(); }
+void				Glib::draw(void) { _gl_handle->draw(); }
+bool				Glib::isOpen(void) const { return _gl_handle->isOpen(); }
+void				Glib::popEvent(void) { _stack.pop(); }
+Glib::Event const *	Glib::getEvent(void) const { return _stack.top(); }

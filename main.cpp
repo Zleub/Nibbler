@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-06 23:50:21
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-07 16:55:11
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -32,10 +32,11 @@ int	main(void)
 	p->init();
 	while (p->isOpen())
 	{
-		// Event e;
+		// Glib::Event e;
 		// while ((e = p->popEvent()))
 			// if (e->content == Glib::ESC);
 			//  exit();
+		p->draw();
 	}
 	return (0);
 }

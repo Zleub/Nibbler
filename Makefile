@@ -3,6 +3,7 @@ INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
 SRC =	src/Glib.cpp\
 		src/Glib_Exception.cpp\
+		src/Glib_Event.cpp\
 		main.cpp
 
 CC		=	clang++

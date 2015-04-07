@@ -16,13 +16,17 @@
 #ifndef GLIB_EVENT_HPP
 #define GLIB_EVENT_HPP
 
-class Glib_Event {
-public:
-	Glib_Event(void);
-	Glib_Event(Glib_Event const &);
-	~Glib_Event(void);
+#include <Glib.hpp>
 
-	Glib_Event &	operator=(Glib_Event const &);
+class Glib::Event {
+public:
+	Event(void);
+	Event(Event const &);
+	~Event(void);
+
+	int		content;
+	Event &	operator=(Event const &);
+private:
 };
 
 #endif

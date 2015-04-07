@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:44
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:53:11
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-07 16:56:54
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -30,7 +30,7 @@ void		SFML::init(void)
 	_window = new sf::RenderWindow(sf::VideoMode(800, 600), "SFML window");
 }
 
-void		SFML::update(void)
+void		SFML::draw(void)
 {
 	sf::Event event;
 	while (_window->pollEvent(event))

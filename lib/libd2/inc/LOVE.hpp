@@ -27,7 +27,7 @@ public:
 	virtual AGlib &	operator=(AGlib const &);
 
 	virtual void		init(void);
-	virtual void		update(void);
+	virtual void		draw(void);
 	virtual bool		isOpen(void);
 };
 

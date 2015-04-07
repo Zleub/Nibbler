@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-06 17:36:27
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-07 17:51:58
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -30,7 +30,7 @@ void		LOVE::init(void)
 
 }
 
-void		LOVE::update(void)
+void		LOVE::draw(void)
 {
 	// sf::Event event;
 	// while (_window->pollEvent(event))
