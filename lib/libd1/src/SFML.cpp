@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-10 18:06:55
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 21:04:01
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -15,10 +15,9 @@
 
 #include <iostream>
 
-#include <AGlib.hpp>
-#include <AGlib_Event.hpp>
-#include <AGlib_Exception.hpp>
 #include <SFML.hpp>
+#include <Glib_Exception.hpp>
+#include <Glib_Event.hpp>
 
 extern "C" {
 	#include <dlfcn.h>
@@ -26,12 +25,12 @@ extern "C" {
 
 SFML::SFML()
 {
-	std::cout << "default new AGlib with lib/libd1/libd1.so" << std::endl;
+	std::cout << "default new Glib with lib/libd1/libd1.so" << std::endl;
 
 	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-		throw AGlib::Exception();
+		throw Glib::Exception();
 	assign();
-	pushEvent(new AGlib::Event(AGlib::ESC));
+	pushEvent(new Glib::Event(Glib::ESC));
 }
 
 SFML::~SFML()
@@ -40,7 +39,7 @@ SFML::~SFML()
 	dlclose(_dl_handle);
 }
 
-AGlib &		SFML::operator=(AGlib const &)
+Glib &		SFML::operator=(Glib const &)
 {
 	return *this;
 }
@@ -62,11 +61,11 @@ void	SFML::checkError(void) const
 	if (error)
 	{
 		std::cerr << error << std::endl;
-		throw AGlib::Exception();
+		throw Glib::Exception();
 	}
 }
 
-void		SFML::pushEvent(AGlib::Event * k) { _stack.push(k); }
+void		SFML::pushEvent(Glib::Event * k) { _stack.push(k); }
 
 void		SFML::init(void)
 {
@@ -82,7 +81,7 @@ void		SFML::draw(void)
 		if (event.type == sf::Event::Closed)
 			_window->close();
 		else if (event.type == sf::Event::KeyPressed)
-			pushEvent(new AGlib::Event(AGlib::ESC));
+			pushEvent(new Glib::Event(Glib::ESC));
 			// std::cout << "i got a keypressed" << std::endl;
 	}
 	_window->clear();
@@ -95,12 +94,12 @@ bool		SFML::isOpen(void)
 	return _window->isOpen();
 }
 
-AGlib::Event const *		SFML::getEvent(void) const
+Glib::Event const *		SFML::getEvent(void)
 {
 	if (!_stack.empty())
 		return _stack.top();
 	else
-		return new AGlib::Event(AGlib::EMPTY);
+		return new Glib::Event(Glib::EMPTY);
 }
 
 bool					SFML::popEvent(void)
@@ -112,15 +111,14 @@ bool					SFML::popEvent(void)
 	return true;
 }
 
-
 extern "C"
 {
-	AGlib * create()
+	Glib * create()
 	{
 		return new SFML();
 	}
 
-	void destroy(AGlib * p)
+	void destroy(Glib * p)
 	{
 		delete p;
 	}

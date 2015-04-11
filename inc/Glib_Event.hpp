@@ -2,30 +2,30 @@
 //      ./shddddddddhs+.
 //    :yddddddddddddddddy:
 //  `sdddddddddddddddddddds`
-//  ydddh+sdddddddddy+ydddds  Nibbler:AGlib_Event
+//  ydddh+sdddddddddy+ydddds  Nibbler:Glib_Event
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 18:00:19
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-10 15:22:11
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 21:00:48
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
 //      .+ydddddddddhs/.
 //          .-::::-`
 
-#ifndef AGLIB_EVENT_HPP
-#define AGLIB_EVENT_HPP
+#ifndef GLIB_EVENT_HPP
+#define GLIB_EVENT_HPP
 
-class AGlib;
+#include <Glib.hpp>
 
-class AGlib::Event {
+class Glib::Event {
 public:
 	Event(void);
-	Event(AGlib::Keys);
+	Event(Glib::Keys);
 	Event(Event const &);
 	~Event(void);
 
-	AGlib::Keys		key;
+	Glib::Keys		key;
 	Event const &	operator=(Event const &);
 private:
 };

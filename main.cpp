@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-10 18:48:18
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 23:10:48
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,15 +16,17 @@
 #include <dlfcn.h>
 #include <iostream>
 
-#include <AGlib.hpp>
-#include <AGlib_Event.hpp>
+#include <Glib.hpp>
+#include <Glib_Event.hpp>
+
+// Glib::
 
 int	main(void)
 {
-	AGlib *		p;
+	Glib *		p;
 
 	try {
-		p = new AGlib;
+		p = new Glib;
 	} catch (std::exception & e) {
 		std::cerr << e.what() << std::endl;
 		exit(-1);
@@ -33,13 +35,13 @@ int	main(void)
 	p->init();
 	while (p->isOpen())
 	{
-		AGlib::Event const * e;
+		Glib::Event const * e;
 		do
 		{
 			e = p->getEvent();
-			if (e->key == AGlib::ESC)
+			if (e->key == Glib::ESC)
 				std::cout << "ESC" << std::endl;
-			else if (e->key == AGlib::EMPTY)
+			else if (e->key == Glib::EMPTY)
 				;
 				// std::cout << "EMPTY" << std::endl;
 		} while (p->popEvent()) ;

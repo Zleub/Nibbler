@@ -3,8 +3,8 @@ INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
 SRC =	src/test.cpp\
 		src/SFML.cpp\
-		src/AGlib_Event.cpp\
-		src/AGlib_Exception.cpp
+		src/Glib_Event.cpp\
+		src/Glib_Exception.cpp
 		# src/AGlib.cpp\
 
 CC		=	clang++
