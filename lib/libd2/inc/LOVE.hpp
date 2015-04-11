@@ -29,6 +29,7 @@ public:
 	virtual void		init(void);
 	virtual void		draw(void);
 	virtual bool		isOpen(void);
+	virtual void		setPush(void(Glib::* p)(Glib::Event *));
 };
 
 #endif

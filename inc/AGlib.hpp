@@ -3,10 +3,10 @@
 //    :yddddddddddddddddy:
 //  `sdddddddddddddddddddds`
 //  ydddh+sdddddddddy+ydddds  Nibbler:AGlib
-// /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
+// /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
-// sdddddddddddddddddddddddds Created: 2015-04-05 05:23:58
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 11:05:35
+// sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-10 18:53:18
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,21 +16,48 @@
 #ifndef AGLIB_HPP
 #define AGLIB_HPP
 
+#include <stack>
+
 class AGlib {
 public:
-	AGlib(void) {};
-	AGlib(AGlib const &) {};
-	virtual ~AGlib(void) {};
+	class	Exception;
+	class	Event;
+	enum	Keys
+	{
+		EMPTY,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		ESC
+	};
 
-	virtual AGlib &	operator=(AGlib const &) = 0;
+	// AGlib(void) {};
+	virtual ~AGlib(void) {} ;
 
-	virtual void	init(void) = 0;
-	virtual void	draw(void) = 0;
+	virtual AGlib &					operator=(AGlib const &);
 
-	virtual bool	isOpen(void) = 0;
+	virtual void					init(void);
+	virtual void					draw(void);
+
+	virtual bool					isOpen(void);
+
+	virtual bool					popEvent(void);
+	virtual AGlib::Event const *	getEvent(void) const;
+	virtual void					pushEvent(AGlib::Event *);
+
+protected:
+	void *							_dl_handle;
+	// create_t *					_create_t;
+	// destroy_t *					_destroy_t;
+
+	virtual void					checkError(void) const ;
+	virtual void					assign(void);
+
+	std::stack<Event *>				_stack;
 };
 
-typedef AGlib *		create_t();
-typedef void		destroy_t(AGlib *);
+typedef AGlib *						create_t();
+typedef void						destroy_t(AGlib *);
 
 #endif

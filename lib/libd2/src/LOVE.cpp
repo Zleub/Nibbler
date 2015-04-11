@@ -43,11 +43,15 @@ void		LOVE::draw(void)
 	// _window->display();
 }
 
-
 bool		LOVE::isOpen(void)
 {
 	// return _window->isOpen();
 	return true;
+}
+
+void		LOVE::setPush(void(Glib::* p)(Glib::Event *))
+{
+	_pushStack = p;
 }
 
 extern "C"

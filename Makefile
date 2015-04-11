@@ -1,10 +1,7 @@
 NAME =	bin/Client
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	src/Glib.cpp\
-		src/Glib_Exception.cpp\
-		src/Glib_Event.cpp\
-		main.cpp
+SRC =	main.cpp
 
 CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra
