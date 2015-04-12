@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 21:02:46
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 19:11:48
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,10 +16,10 @@
 #ifndef SFML_HPP
 #define SFML_HPP
 
-#include <Glib.hpp>
+#include <IGlib.hpp>
 #include <SFML/Graphics.hpp>
 
-class SFML : public Glib {
+class SFML : public IGlib {
 private:
 	sf::RenderWindow	*_window;
 
@@ -31,14 +31,14 @@ public:
 	SFML(SFML const &);
 	~SFML(void);
 
-	Glib &	operator=(Glib const &);
+	IGlib &	operator=(IGlib const &);
 
-	virtual void					init(void) ;
-	virtual void					draw(void);
-	virtual bool					isOpen(void);
-	virtual bool					popEvent(void) ;
-	virtual Glib::Event const *		getEvent(void) ;
-	virtual void					pushEvent(Glib::Event *) ;
+	void					init(void) ;
+	void					draw(void);
+	bool					isOpen(void);
+	bool					popEvent(void) ;
+	IGlib::Event const *	getEvent(void) ;
+	void					pushEvent(IGlib::Event *) ;
 };
 
 #endif

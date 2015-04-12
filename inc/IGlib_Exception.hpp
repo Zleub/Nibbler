@@ -2,23 +2,23 @@
 //      ./shddddddddhs+.
 //    :yddddddddddddddddy:
 //  `sdddddddddddddddddddds`
-//  ydddh+sdddddddddy+ydddds  Nibbler:Glib_Exception
+//  ydddh+sdddddddddy+ydddds  Nibbler:IGlib_Exception
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 00:16:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 21:00:54
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 18:28:31
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
 //      .+ydddddddddhs/.
 //          .-::::-`
 
-#ifndef GLIB_EXCEPTION_HPP
-#define GLIB_EXCEPTION_HPP
+#ifndef IGLIB_EXCEPTION_HPP
+#define IGLIB_EXCEPTION_HPP
 
-#include <Glib.hpp>
+#include <IGlib.hpp>
 
-class Glib::Exception : public std::exception {
+class IGlib::Exception : public std::exception {
 public:
 	Exception(void);
 	Exception(Exception const &);

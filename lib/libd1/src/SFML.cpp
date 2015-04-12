@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-11 21:04:01
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 20:39:02
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,8 +16,8 @@
 #include <iostream>
 
 #include <SFML.hpp>
-#include <Glib_Exception.hpp>
-#include <Glib_Event.hpp>
+#include <IGlib_Exception.hpp>
+#include <IGlib_Event.hpp>
 
 extern "C" {
 	#include <dlfcn.h>
@@ -25,21 +25,21 @@ extern "C" {
 
 SFML::SFML()
 {
-	std::cout << "default new Glib with lib/libd1/libd1.so" << std::endl;
+	// std::cout << "default new IGlib with lib/libd1/libd1.so" << std::endl;
 
-	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-		throw Glib::Exception();
-	assign();
-	pushEvent(new Glib::Event(Glib::ESC));
+	// if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
+	// 	throw IGlib::Exception();
+	// assign();
+	// pushEvent(new IGlib::Event(IGlib::ESC));
 }
 
 SFML::~SFML()
 {
 	// _destroy_t(_gl_handle);
-	dlclose(_dl_handle);
+	// dlclose(_dl_handle);
 }
 
-Glib &		SFML::operator=(Glib const &)
+IGlib &		SFML::operator=(IGlib const &)
 {
 	return *this;
 }
@@ -50,22 +50,22 @@ void	SFML::assign(void)
 	// _destroy_t = (destroy_t *)(dlsym(_dl_handle, "destroy"));
 	// checkError();
 	// _gl_handle = _create_t();
-	// _gl_handle->setPush(&Glib::pushEvent);
+	// _gl_handle->setPush(&IGlib::pushEvent);
 }
 
 void	SFML::checkError(void) const
 {
-	const char *	error;
+	// const char *	error;
 
-	error = dlerror();
-	if (error)
-	{
-		std::cerr << error << std::endl;
-		throw Glib::Exception();
-	}
+	// error = dlerror();
+	// if (error)
+	// {
+	// 	std::cerr << error << std::endl;
+	// 	throw IGlib::Exception();
+	// }
 }
 
-void		SFML::pushEvent(Glib::Event * k) { _stack.push(k); }
+void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
 void		SFML::init(void)
 {
@@ -81,8 +81,11 @@ void		SFML::draw(void)
 		if (event.type == sf::Event::Closed)
 			_window->close();
 		else if (event.type == sf::Event::KeyPressed)
-			pushEvent(new Glib::Event(Glib::ESC));
+		{
+			if (event.key.code == sf::Keyboard::Escape)
+			pushEvent(new IGlib::Event(IGlib::ESC));
 			// std::cout << "i got a keypressed" << std::endl;
+		}
 	}
 	_window->clear();
 	// _window->draw(sprite);
@@ -94,12 +97,12 @@ bool		SFML::isOpen(void)
 	return _window->isOpen();
 }
 
-Glib::Event const *		SFML::getEvent(void)
+IGlib::Event const *		SFML::getEvent(void)
 {
 	if (!_stack.empty())
 		return _stack.top();
 	else
-		return new Glib::Event(Glib::EMPTY);
+		return new IGlib::Event(IGlib::EMPTY);
 }
 
 bool					SFML::popEvent(void)
@@ -113,12 +116,12 @@ bool					SFML::popEvent(void)
 
 extern "C"
 {
-	Glib * create()
+	IGlib * create()
 	{
 		return new SFML();
 	}
 
-	void destroy(Glib * p)
+	void destroy(IGlib * p)
 	{
 		delete p;
 	}
