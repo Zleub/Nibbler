@@ -6,25 +6,54 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 20:39:35
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 21:00:37
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
 //      .+ydddddddddhs/.
 //          .-::::-`
 
-#include <dlfcn.h>
 #include <iostream>
 
-#include <Glib.hpp>
 #include <IGlib_Event.hpp>
 #include <IGlib_Exception.hpp>
 
-// Glib::
 extern "C" {
 	#include <dlfcn.h>
 }
 
+IGlib::Exception::Exception() {}
+IGlib::Exception::~Exception() throw() {}
+
+const char * IGlib::Exception::what() const throw() {
+	return "IGlib::Exception";
+}
+
+class Test
+{
+public:
+	Test(void);
+	Test(std::string);
+	~Test(void);
+
+private:
+
+	void * _dl_handle;
+};
+
+Test::Test(void)
+{
+	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
+	throw IGlib::Exception();
+};
+
+Test::Test(std::string name)
+{
+	if (!(_dl_handle = dlopen(std::string("lib/" + name).c_str(), RTLD_LAZY | RTLD_LOCAL)))
+		throw IGlib::Exception();
+};
+
+Test::~Test(void) {};
 
 int	main(void)
 {
@@ -32,8 +61,7 @@ int	main(void)
 
 	void * _dl_handle;
 	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-		std::cout << "caca" << std::endl;
-		// throw IGlib::Exception();
+		throw IGlib::Exception();
 
 	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
 	// void (* _destroy_t)(IGlib *) = (destroy_t *)(dlsym(_dl_handle, "destroy"));
@@ -53,15 +81,14 @@ int	main(void)
 	p->init();
 	while (p->isOpen())
 	{
-		Glib::Event const * e;
+		IGlib::Event const * e;
 		do
 		{
 			e = p->getEvent();
-			if (e->key == Glib::ESC)
+			if (e->key == IGlib::ESC)
 				std::cout << "ESC" << std::endl;
-			else if (e->key == Glib::EMPTY)
-				;
-				// std::cout << "EMPTY" << std::endl;
+			else if (e->key == IGlib::EMPTY)
+				; // std::cout << "EMPTY" << std::endl;
 		} while (p->popEvent()) ;
 		p->draw();
 	}
