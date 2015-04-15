@@ -83,9 +83,13 @@ void		SFML::draw(void)
 			sf::RectangleShape rect(sf::Vector2f(_scale, _scale));
 			rect.setPosition(x * _scale, y * _scale);
 			if (_game->map[y * _game->width + x] == Game::EMPTY)
-				rect.setFillColor(sf::Color(255, 0, 0));
+				rect.setFillColor(sf::Color::Black);
 			if (_game->map[y * _game->width + x] == Game::SNAKE_HEAD)
-				rect.setFillColor(sf::Color(0, 255, 0));
+				rect.setFillColor(sf::Color::Green);
+			if (_game->map[y * _game->width + x] == Game::SNAKE_BODY)
+				rect.setFillColor(sf::Color::White);
+			if (_game->map[y * _game->width + x] == Game::FOOD)
+				rect.setFillColor(sf::Color::Red);
 			_window->draw(rect);
 			x += 1;
 		}
