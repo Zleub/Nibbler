@@ -85,12 +85,35 @@ int	main(void)
 		do
 		{
 			e = p->getEvent();
+
+			// KEYBOARD INPUT
+
 			if (e->key == IGlib::ESC)
 				std::cout << "ESC" << std::endl;
+			if (e->key == IGlib::UP)
+				std::cout << "UP" << std::endl;
+			if (e->key == IGlib::DOWN)
+				std::cout << "DOWN" << std::endl;
+			if (e->key == IGlib::LEFT)
+				std::cout << "LEFT" << std::endl;
+			if (e->key == IGlib::RIGHT)
+				std::cout << "RIGHT" << std::endl;
 			else if (e->key == IGlib::EMPTY)
 				; // std::cout << "EMPTY" << std::endl;
+
+
 		} while (p->popEvent()) ;
 		p->draw();
 	}
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+

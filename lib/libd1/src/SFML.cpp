@@ -84,6 +84,14 @@ void		SFML::draw(void)
 		{
 			if (event.key.code == sf::Keyboard::Escape)
 			pushEvent(new IGlib::Event(IGlib::ESC));
+				if (event.key.code == sf::Keyboard::Up)
+			pushEvent(new IGlib::Event(IGlib::UP));
+				if (event.key.code == sf::Keyboard::Down)
+			pushEvent(new IGlib::Event(IGlib::DOWN));
+				if (event.key.code == sf::Keyboard::Left)
+			pushEvent(new IGlib::Event(IGlib::LEFT));
+				if (event.key.code == sf::Keyboard::Right)
+			pushEvent(new IGlib::Event(IGlib::RIGHT));
 			// std::cout << "i got a keypressed" << std::endl;
 		}
 	}
