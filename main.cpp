@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 21:00:37
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:10:57
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -58,6 +58,8 @@ Test::~Test(void) {};
 int	main(void)
 {
 	// std::cout << "default new IGlib with lib/libd1/libd1.so" << std::endl;
+	Game game;
+
 
 	void * _dl_handle;
 	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
@@ -78,7 +80,7 @@ int	main(void)
 	// 	exit(-1);
 	// }
 
-	p->init();
+	p->init(&game);
 	while (p->isOpen())
 	{
 		IGlib::Event const * e;

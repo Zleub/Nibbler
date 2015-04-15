@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 19:13:47
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:20:34
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,13 +16,13 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-# include <vector>
+#include <vector>
 
 class Game {
 public:
 
-	static int			width;
-	static int			height;
+	int					width;
+	int					height;
 	std::vector<char>	map;
 
 	enum				map_cells
@@ -33,19 +33,11 @@ public:
 		FOOD
 	};
 
-	Game(void) {
-		int i = -1;
-
-		this->width = 11;
-		this->height = 11;
-
-		while (++i != this->width * this->height)
-			this->map.push_back(Game::EMPTY);
-	} ;
-	Game(Game const & obj) {} ;
+	Game(void) ;
+	Game(Game const & obj) { *this = obj; } ;
 	~Game(void) {} ;
 
-	Game &					operator=(Game const &rhs) = 0;
+	Game &					operator=(Game const & rhs);
 
 };
 

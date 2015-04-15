@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 19:13:47
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:09:45
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,6 +16,7 @@
 #ifndef IGLIB_HPP
 #define IGLIB_HPP
 
+#include <Game.hpp>
 #include <stack>
 
 class IGlib {
@@ -36,7 +37,7 @@ public:
 
 	virtual IGlib &					operator=(IGlib const &rhs) = 0;
 
-	virtual void					init(void) = 0;
+	virtual void					init(Game *) = 0;
 	virtual void					update(void) = 0;
 	virtual void					draw(void) = 0;
 

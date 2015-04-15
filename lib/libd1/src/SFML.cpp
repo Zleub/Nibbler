@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-12 20:39:02
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:35:24
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -67,10 +67,11 @@ void	SFML::checkError(void) const
 
 void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
-void		SFML::init(void)
+void		SFML::init(Game * game)
 {
 	std::cout << "SFML init 1" << std::endl;
-	_window = new sf::RenderWindow(sf::VideoMode(800, 600), "SFML window");
+	_window = new sf::RenderWindow(sf::VideoMode(800, 800), "SFML window");
+	_game = game;
 }
 
 void		SFML::update(void)
@@ -102,6 +103,34 @@ void		SFML::draw(void)
 {
 	_window->clear();
 	// _window->draw(sprite);
+
+	sf::Vector2u _w = _window->getSize();
+
+	int x_size = _w.x / _game->width;
+	int y_size = _w.y / _game->height;
+
+	std::cout << "x_size = " << x_size << " = (" << _w.x << "/" << _game->width << ") ET RESTE -> " << _w.x % _game->width << "." << std::endl;
+	std::cout << "y_size = " << y_size << " = (" << _w.y << "/" << _game->height << ") ET RESTE -> " << _w.y % _game->height << "." << std::endl;
+
+	int x;
+	int y = 0;
+	while (y < _game->height)
+	{
+		x = 0;
+		while (x < _game->width)
+		{
+			sf::RectangleShape rect(sf::Vector2f(x_size, y_size));
+			rect.setPosition(x * x_size, y * y_size);
+			if (_game->map[y * _game->width + x] == Game::EMPTY)
+				rect.setFillColor(sf::Color(255, 0, 0));
+			if (_game->map[y * _game->width + x] == Game::SNAKE_HEAD)
+				rect.setFillColor(sf::Color(0, 255, 0));
+			_window->draw(rect);
+			x += 1;
+		}
+		y += 1;
+	}
+
 	_window->display();
 }
 

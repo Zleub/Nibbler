@@ -1,7 +1,8 @@
 NAME =	bin/Client
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	main.cpp
+SRC =	src/Game.cpp\
+		main.cpp
 
 CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra
