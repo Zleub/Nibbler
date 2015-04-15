@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:09:45
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 21:13:16
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -48,14 +48,7 @@ public:
 	virtual void					pushEvent(IGlib::Event *) = 0 ;
 
 protected:
-	void *							_dl_handle;
-
-	virtual void					checkError(void) const = 0;
-	virtual void					assign(void) = 0;
-
 	std::stack<Event *>				_stack;
-
-	// virtual std::stack<Event *>		getStack(void) const = 0 ;
 };
 
 typedef IGlib *						create_t();

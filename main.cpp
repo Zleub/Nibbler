@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:10:57
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 21:14:29
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -29,35 +29,8 @@ const char * IGlib::Exception::what() const throw() {
 	return "IGlib::Exception";
 }
 
-class Test
-{
-public:
-	Test(void);
-	Test(std::string);
-	~Test(void);
-
-private:
-
-	void * _dl_handle;
-};
-
-Test::Test(void)
-{
-	if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-	throw IGlib::Exception();
-};
-
-Test::Test(std::string name)
-{
-	if (!(_dl_handle = dlopen(std::string("lib/" + name).c_str(), RTLD_LAZY | RTLD_LOCAL)))
-		throw IGlib::Exception();
-};
-
-Test::~Test(void) {};
-
 int	main(void)
 {
-	// std::cout << "default new IGlib with lib/libd1/libd1.so" << std::endl;
 	Game game;
 
 
@@ -66,19 +39,10 @@ int	main(void)
 		throw IGlib::Exception();
 
 	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
-	// void (* _destroy_t)(IGlib *) = (destroy_t *)(dlsym(_dl_handle, "destroy"));
-	// assign();
-	// pushEvent(new IGlib::Event(IGlib::ESC));
-	IGlib *		p;
+
+	IGlib * p;
 
 	p = _create_t();
-
-	// try {
-	// 	p = new Glib;
-	// } catch (std::exception & e) {
-	// 	std::cerr << e.what() << std::endl;
-	// 	exit(-1);
-	// }
 
 	p->init(&game);
 	while (p->isOpen())
