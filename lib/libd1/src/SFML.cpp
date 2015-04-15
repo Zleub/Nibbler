@@ -25,6 +25,7 @@ extern "C" {
 
 SFML::SFML()
 {
+	this->_scale = 10;
 	// std::cout << "default new IGlib with lib/libd1/libd1.so" << std::endl;
 
 	// if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
@@ -70,7 +71,11 @@ void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 void		SFML::init(Game * game)
 {
 	std::cout << "SFML init 1" << std::endl;
-	_window = new sf::RenderWindow(sf::VideoMode(800, 800), "SFML window");
+
+	_window = new sf::RenderWindow(
+		sf::VideoMode(game->width * this->_scale, game->height * this->_scale),
+		"SFML window"
+		);
 	_game = game;
 }
 
@@ -104,14 +109,6 @@ void		SFML::draw(void)
 	_window->clear();
 	// _window->draw(sprite);
 
-	sf::Vector2u _w = _window->getSize();
-
-	int x_size = _w.x / _game->width;
-	int y_size = _w.y / _game->height;
-
-	std::cout << "x_size = " << x_size << " = (" << _w.x << "/" << _game->width << ") ET RESTE -> " << _w.x % _game->width << "." << std::endl;
-	std::cout << "y_size = " << y_size << " = (" << _w.y << "/" << _game->height << ") ET RESTE -> " << _w.y % _game->height << "." << std::endl;
-
 	int x;
 	int y = 0;
 	while (y < _game->height)
@@ -119,8 +116,8 @@ void		SFML::draw(void)
 		x = 0;
 		while (x < _game->width)
 		{
-			sf::RectangleShape rect(sf::Vector2f(x_size, y_size));
-			rect.setPosition(x * x_size, y * y_size);
+			sf::RectangleShape rect(sf::Vector2f(this->_scale, this->_scale));
+			rect.setPosition(x * this->_scale, y * this->_scale);
 			if (_game->map[y * _game->width + x] == Game::EMPTY)
 				rect.setFillColor(sf::Color(255, 0, 0));
 			if (_game->map[y * _game->width + x] == Game::SNAKE_HEAD)

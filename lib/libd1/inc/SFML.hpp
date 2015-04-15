@@ -21,6 +21,7 @@
 
 class SFML : public IGlib {
 private:
+	int				_scale;
 	Game				* _game;
 	sf::RenderWindow	* _window;
 
