@@ -37,6 +37,7 @@ public:
 	virtual IGlib &					operator=(IGlib const &rhs) = 0;
 
 	virtual void					init(void) = 0;
+	virtual void					update(void) = 0;
 	virtual void					draw(void) = 0;
 
 	virtual bool					isOpen(void) = 0;

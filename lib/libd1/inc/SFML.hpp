@@ -34,6 +34,7 @@ public:
 	IGlib &	operator=(IGlib const &);
 
 	void					init(void) ;
+	void					update(void);
 	void					draw(void);
 	bool					isOpen(void);
 	bool					popEvent(void) ;

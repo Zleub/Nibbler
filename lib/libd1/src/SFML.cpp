@@ -73,9 +73,10 @@ void		SFML::init(void)
 	_window = new sf::RenderWindow(sf::VideoMode(800, 600), "SFML window");
 }
 
-void		SFML::draw(void)
+void		SFML::update(void)
 {
 	sf::Event event;
+
 	while (_window->pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
@@ -95,6 +96,10 @@ void		SFML::draw(void)
 			// std::cout << "i got a keypressed" << std::endl;
 		}
 	}
+}
+
+void		SFML::draw(void)
+{
 	_window->clear();
 	// _window->draw(sprite);
 	_window->display();

@@ -82,6 +82,8 @@ int	main(void)
 	while (p->isOpen())
 	{
 		IGlib::Event const * e;
+
+		p->update();
 		do
 		{
 			e = p->getEvent();
@@ -99,7 +101,7 @@ int	main(void)
 			if (e->key == IGlib::RIGHT)
 				std::cout << "RIGHT" << std::endl;
 			else if (e->key == IGlib::EMPTY)
-				; // std::cout << "EMPTY" << std::endl;
+				; //std::cout << "EMPTY" << std::endl;
 
 
 		} while (p->popEvent()) ;
@@ -107,13 +109,3 @@ int	main(void)
 	}
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
