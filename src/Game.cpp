@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:35:15
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 23:10:51
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -18,10 +18,10 @@
 Game::Game(void) {
 	int i = -1;
 
-	this->width = 101;
-	this->height = 101;
+	this->width = 11;
+	this->height = 11;
 
 	while (++i != this->width * this->height)
 		this->map.push_back(Game::EMPTY);
-	this->map[5100] = Game::SNAKE_HEAD;
+	// this->map[5100] = Game::SNAKE_HEAD;
 }
