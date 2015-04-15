@@ -25,7 +25,23 @@ public:
 	static int			height;
 	std::vector<char>	map;
 
-	Game(void) {} ;
+	enum				map_cells
+	{
+		EMPTY,
+		SNAKE_HEAD,
+		SNAKE_BODY,
+		FOOD
+	};
+
+	Game(void) {
+		int i = -1;
+
+		this->width = 11;
+		this->height = 11;
+
+		while (++i != this->width * this->height)
+			this->map.push_back(Game::EMPTY);
+	} ;
 	Game(Game const & obj) {} ;
 	~Game(void) {} ;
 
@@ -34,6 +50,8 @@ public:
 };
 
 #endif
+
+
 
 
 
