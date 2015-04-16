@@ -29,14 +29,20 @@ const char * IGlib::Exception::what() const throw() {
 	return "IGlib::Exception";
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	Game game;
 
+	if (ac != 2)
+	{
+		std::cout << "Usage: ./Client <library.so>" << std::endl;
+		return (0);
+	}
 
 	void * _dl_handle;
 	// if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-	if (!(_dl_handle = dlopen("lib/libd2/libd2.so", RTLD_LAZY | RTLD_LOCAL)))
+
+	if (!(_dl_handle = dlopen(av[1], RTLD_LAZY | RTLD_LOCAL)))
 		throw IGlib::Exception();
 
 	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
