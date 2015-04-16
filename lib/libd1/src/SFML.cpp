@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 23:13:17
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 03:51:56
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -23,7 +23,7 @@ extern "C" {
 	#include <dlfcn.h>
 }
 
-SFML::SFML() : _scale(10) {}
+SFML::SFML() : _scale(25) {}
 
 SFML::~SFML() {}
 
@@ -39,7 +39,7 @@ void		SFML::init(Game * game)
 	std::cout << "SFML init 1" << std::endl;
 
 	_window = new sf::RenderWindow(
-		sf::VideoMode(game->width * this->_scale * 4, game->height * this->_scale * 4),
+		sf::VideoMode(game->width * this->_scale * 2, game->height * this->_scale * 2),
 		"SFML window"
 		);
 	_game = game;
@@ -69,17 +69,19 @@ void		SFML::update(void)
 	}
 }
 
-void		SFML::mdraw(int x, int y)
+void		SFML::mdraw(int index, int x, int y)
 {
 	sf::ConvexShape rect;
 	rect.setPointCount(4);
 	rect.setPoint(0, sf::Vector2f(0, 0));
-	rect.setPoint(1, sf::Vector2f(_scale, _scale));
-	rect.setPoint(2, sf::Vector2f(0, _scale * 2));
-	rect.setPoint(3, sf::Vector2f(-_scale, _scale));
+	rect.setPoint(1, sf::Vector2f(_scale, _scale / 2));
+	rect.setPoint(2, sf::Vector2f(0, _scale));
+	rect.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
 	rect.setPosition(x, y);
-	x += _scale * 2;
-	y += _scale * 2;
+
+	if (_game->map[index] == Game::SNAKE_HEAD)
+		rect.setFillColor(sf::Color::Green);
+
 	_window->draw(rect);
 }
 
@@ -87,29 +89,32 @@ void		SFML::draw(void)
 {
 	_window->clear();
 
-	sf::Vector2u _v = _window->getSize();
+	// sf::Vector2u _v = _window->getSize();
+
+	int middle = _game->width * this->_scale * 2 / 2;
 
 	int i;
 	int j;
 
-	i = _v.x / 2;
+	i = middle;
 	j = 0;
 
 	int x;
 	int y = 0;
+
 	while (y < _game->height)
 	{
 		x = 0;
 		while (x < _game->width)
 		{
-			mdraw(i, j);
+			mdraw(x + y * _game->width, i, j);
 			x += 1;
 			i += _scale + 1;
 			j += _scale + 1;
 		}
 		y += 1;
-		i = (_v.x / 2) - (_scale * y) - 1;
-		j = (_scale * y) + 1;
+		i = middle - ((_scale * y) + y);
+		j = ((_scale * y) + y);
 	}
 
 	_window->display();

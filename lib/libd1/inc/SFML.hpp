@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 22:55:44
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 03:51:26
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -38,7 +38,7 @@ public:
 	void					init(Game *) ;
 	void					update(void);
 	void					draw(void);
-	void					mdraw(int x, int y);
+	void					mdraw(int, int, int);
 	bool					isOpen(void);
 	bool					popEvent(void) ;
 	IGlib::Event const *	getEvent(void) ;
