@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-05 17:55:28
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:30:12
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -16,20 +16,33 @@
 #ifndef LOVE_HPP
 #define LOVE_HPP
 
-#include <AGlib.hpp>
+#include <IGlib.hpp>
 
-class LOVE : public AGlib {
+class Love : public IGlib {
+private:
+	int						_scale;
+	int						_fd;
+	Game					* _game;
+
+	void					checkError(void) const ;
+	void					assign(void);
+
 public:
-	LOVE(void);
-	LOVE(LOVE const &);
-	virtual ~LOVE(void);
+	Love(void);
+	Love(Love const &);
+	~Love(void);
 
-	virtual AGlib &	operator=(AGlib const &);
+	IGlib &	operator=(IGlib const &);
 
-	virtual void		init(void);
-	virtual void		draw(void);
-	virtual bool		isOpen(void);
-	virtual void		setPush(void(Glib::* p)(Glib::Event *));
+	static int				isClosed;
+
+	void					init(Game *) ;
+	void					update(void);
+	void					draw(void);
+	bool					isOpen(void);
+	bool					popEvent(void) ;
+	IGlib::Event const *	getEvent(void) ;
+	void					pushEvent(IGlib::Event *) ;
 };
 
 #endif

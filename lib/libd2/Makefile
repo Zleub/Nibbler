@@ -1,8 +1,7 @@
 NAME =	libd2.so
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	src/LOVE.cpp\
-		# src/AGlib.cpp\
+SRC =	src/LOVE.cpp
 
 CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra

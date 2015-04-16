@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:40:37
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:45:23
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -18,10 +18,6 @@
 #include <SFML.hpp>
 #include <IGlib_Exception.hpp>
 #include <IGlib_Event.hpp>
-
-extern "C" {
-	#include <dlfcn.h>
-}
 
 SFML::SFML() : _scale(25) {}
 
@@ -135,8 +131,6 @@ void		SFML::mdraw(int index, int x, int y) const
 void		SFML::draw(void)
 {
 	_window->clear();
-
-	// sf::Vector2u _v = _window->getSize();
 
 	int middle = _game->width * this->_scale * 2 / 2;
 

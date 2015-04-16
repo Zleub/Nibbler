@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:40:17
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:43:57
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -21,9 +21,9 @@
 
 class SFML : public IGlib {
 private:
-	int				_scale;
-	Game				* _game;
-	sf::RenderWindow	* _window;
+	int						_scale;
+	Game					* _game;
+	sf::RenderWindow		* _window;
 
 	void					checkError(void) const ;
 	void					assign(void);

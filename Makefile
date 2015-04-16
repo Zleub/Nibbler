@@ -1,4 +1,4 @@
-NAME =	bin/Client
+NAME =	bin/Nibbler
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
 SRC =	src/Game.cpp\

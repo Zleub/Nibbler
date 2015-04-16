@@ -6,62 +6,104 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-07 17:51:58
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:32:01
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
 //      .+ydddddddddhs/.
 //          .-::::-`
 
+extern "C" {
+	#include <unistd.h>
+}
+
 #include <iostream>
 #include <LOVE.hpp>
+#include <IGlib_Event.hpp>
 
-LOVE::LOVE() {}
-LOVE::~LOVE() {}
+IGlib::Event::Event() {}
+IGlib::Event::Event(IGlib::Keys k) { key = k; }
+IGlib::Event::~Event() {}
 
-AGlib &	LOVE::operator=(AGlib const &)
+IGlib::Event::Event(IGlib::Event const & e)
+{
+	key = e.key;
+}
+
+IGlib::Event const &		IGlib::Event::operator=(IGlib::Event const & rhs)
+{
+	*this = rhs;
+	return (*this);
+}
+
+int	Love::isClosed = 0;
+
+Love::Love(void) {}
+Love::~Love(void) {}
+
+IGlib &		Love::operator=(IGlib const &)
 {
 	return *this;
 }
 
-void		LOVE::init(void)
-{
-	std::cout << "LOVE init 1" << std::endl;
+void		Love::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
+void		caca(int sig)
+{
+	if (sig == 20)
+		Love::isClosed = 1;
 }
 
-void		LOVE::draw(void)
+void		Love::init(Game * game)
 {
-	// sf::Event event;
-	// while (_window->pollEvent(event))
+	std::cout << "Love init 1" << std::endl;
+
+	_game = game;
+
+	int		p[2];
+	if (pipe(p))
+		std::cout << "No pipe !" << std::endl;
+
+	const char	*argv[3] = {
+		"love",
+		"ext/love",
+		NULL
+	};
+	pid_t i = fork();
+	if (i == 0)
+	{
+		close(p[1]);
+		dup2(p[0], 0);
+		execvp("love", (char * const *)argv) ;
+	}
+	else if (i > 0)
+	{
+		_fd = p[1];
+		close(p[0]);
+		std::cout << "dad" << std::endl;
+		signal(SIGCHLD, caca);
+	}
+	// else
 	// {
-	// 	if (event.type == sf::Event::Closed)
-	// 		_window->close();
+	// 	std::cout << "fork failed" << std::endl;
+	// 	exit(-1);
 	// }
-	// _window->clear();
-	// // _window->draw(sprite);
-	// _window->display();
 }
 
-bool		LOVE::isOpen(void)
-{
-	// return _window->isOpen();
-	return true;
-}
-
-void		LOVE::setPush(void(Glib::* p)(Glib::Event *))
-{
-	_pushStack = p;
-}
+void					Love::update(void) {}
+void					Love::draw(void) { std::cout << "draw" << std::endl; write(_fd, "caca\n", 5); }
+bool					Love::isOpen(void) { if (Love::isClosed) return false; else return true; }
+bool					Love::popEvent(void) { return false; }
+IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }
 
 extern "C"
 {
-	AGlib * create()
+	IGlib * create()
 	{
-		return new LOVE;
+		return new Love();
 	}
 
-	void destroy(AGlib * p)
+	void destroy(IGlib * p)
 	{
 		delete p;
 	}
