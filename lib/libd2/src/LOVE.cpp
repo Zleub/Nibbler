@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:32:01
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:42:12
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -90,8 +90,15 @@ void		Love::init(Game * game)
 	// }
 }
 
+void					Love::draw(void) {
+	static int i;
+	// std::cout << "draw" << std::endl;
+
+	std::string s = std::to_string(i) + "\n";
+	write(_fd, s.c_str(), s.length());
+	i += 1;
+}
 void					Love::update(void) {}
-void					Love::draw(void) { std::cout << "draw" << std::endl; write(_fd, "caca\n", 5); }
 bool					Love::isOpen(void) { if (Love::isClosed) return false; else return true; }
 bool					Love::popEvent(void) { return false; }
 IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }
