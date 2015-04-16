@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:42:12
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 00:08:43
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -52,16 +52,20 @@ void		caca(int sig)
 {
 	if (sig == 20)
 		Love::isClosed = 1;
+	std::cout << sig << std::endl;
 }
 
 void		Love::init(Game * game)
 {
-	std::cout << "Love init 1" << std::endl;
+	std::cout << "Love init 1: you need love in your PATH" << std::endl;
 
 	_game = game;
 
-	int		p[2];
-	if (pipe(p))
+	int		p1[2];
+	if (pipe(p1))
+		std::cout << "No pipe !" << std::endl;
+	int		p2[2];
+	if (pipe(p2))
 		std::cout << "No pipe !" << std::endl;
 
 	const char	*argv[3] = {
@@ -72,14 +76,20 @@ void		Love::init(Game * game)
 	pid_t i = fork();
 	if (i == 0)
 	{
-		close(p[1]);
-		dup2(p[0], 0);
+		close(p1[1]);
+		dup2(p1[0], 0);
+
+		close(p2[0]);
+		dup2(p2[1], 1);
 		execvp("love", (char * const *)argv) ;
 	}
 	else if (i > 0)
 	{
-		_fd = p[1];
-		close(p[0]);
+		_fd = p1[1];
+		close(p1[0]);
+
+		close(p2[1]);
+		dup2(p2[0], 0);
 		std::cout << "dad" << std::endl;
 		signal(SIGCHLD, caca);
 	}
@@ -98,7 +108,7 @@ void					Love::draw(void) {
 	write(_fd, s.c_str(), s.length());
 	i += 1;
 }
-void					Love::update(void) {}
+void					Love::update(void) { std::cout << "c++ update" << std::endl; }
 bool					Love::isOpen(void) { if (Love::isClosed) return false; else return true; }
 bool					Love::popEvent(void) { return false; }
 IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }

@@ -9,6 +9,7 @@ function love.update(dt)
 	if #t * 12 > height then
 		table.remove(t, 1)
 	end
+	print("update");
 end
 
 function love.draw()
