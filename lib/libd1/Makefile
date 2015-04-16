@@ -1,8 +1,7 @@
 NAME =	libd1.so
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	src/test.cpp\
-		src/SFML.cpp\
+SRC =	src/SFML.cpp\
 		src/IGlib_Event.cpp\
 		src/IGlib_Exception.cpp
 		# src/AGlib.cpp\

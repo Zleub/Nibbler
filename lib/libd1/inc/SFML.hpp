@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 04:59:08
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 03:51:26
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:40:17
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -27,6 +27,9 @@ private:
 
 	void					checkError(void) const ;
 	void					assign(void);
+	void					mdraw(int, int, int) const ;
+	void					drawFloor(int x, int y) const ;
+	void					drawSnakeHead(int x, int y) const ;
 
 public:
 	SFML(void);
@@ -38,7 +41,6 @@ public:
 	void					init(Game *) ;
 	void					update(void);
 	void					draw(void);
-	void					mdraw(int, int, int);
 	bool					isOpen(void);
 	bool					popEvent(void) ;
 	IGlib::Event const *	getEvent(void) ;
