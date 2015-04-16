@@ -31,19 +31,71 @@ const char * IGlib::Exception::what() const throw() {
 
 int	main(int ac, char **av)
 {
-	Game game;
+	Game		game;
+	void		* _dl_handle;
+	bool		wrong = false;
 
 	if (ac != 2)
 	{
-		std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
-		return (0);
+		if (ac == 1)
+		{
+			std::string reponse;
+			std::cout << "       -------       Nibbler       -------       " << std::endl;
+			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
+			std::cout << "No library specified, please choose :" << std::endl;
+			std::cout << "[1] SFML library ('lib/libd1/libd1.so')" << std::endl;
+			std::cout << "[2] LOVE library ('lib/libd2/libd2.so')" << std::endl;
+			std::cout << "[3] OTHER library ('path/to/lib.so')" << std::endl;
+			std::cin >> reponse;
+			if (reponse != "1" && reponse != "2" && reponse != "3")
+				wrong = true;
+			if (reponse == "1")
+				if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
+				{
+					wrong = true;
+					throw IGlib::Exception();
+				}
+			if (reponse == "2")
+				if (!(_dl_handle = dlopen("lib/libd2/libd2.so", RTLD_LAZY | RTLD_LOCAL)))
+				{
+					wrong = true;
+					throw IGlib::Exception();
+				}
+			if (reponse == "3")
+			{
+				std::cout << "LIBRARY PATH : ";
+				std::cin >> reponse;
+				std::cout << std::endl;
+				if (!(_dl_handle = dlopen(reponse.c_str(), RTLD_LAZY | RTLD_LOCAL)))
+				{
+					wrong = true;
+					throw IGlib::Exception();
+				}
+			}
+
+			if (wrong == true)
+			{
+				std::cout << "Nibbler: Library not loaded please refer to usage." << std::endl;
+				std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
+				return (0);
+			}
+
+		}
+		else
+		{
+			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
+			return (0);
+		}
+
+	}
+	else
+	{
+		if (!(_dl_handle = dlopen(av[1], RTLD_LAZY | RTLD_LOCAL)))
+			throw IGlib::Exception();
 	}
 
-	void * _dl_handle;
 	// if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
 
-	if (!(_dl_handle = dlopen(av[1], RTLD_LAZY | RTLD_LOCAL)))
-		throw IGlib::Exception();
 
 	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
 
