@@ -38,7 +38,7 @@ IGlib::Event const &		IGlib::Event::operator=(IGlib::Event const & rhs)
 
 int	Love::isClosed = 0;
 
-Love::Love(void) {}
+Love::Love(void) : _scale(10) {}
 Love::~Love(void) {}
 
 IGlib &		Love::operator=(IGlib const &)
@@ -108,7 +108,10 @@ void					Love::draw(void) {
 	write(_fd, s.c_str(), s.length());
 	i += 1;
 }
-void					Love::update(void) { std::cout << "c++ update" << std::endl; }
+void					Love::update(void)
+{
+	std::cout << "c++ update" << std::endl;
+}
 bool					Love::isOpen(void) { if (Love::isClosed) return false; else return true; }
 bool					Love::popEvent(void) { return false; }
 IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }

@@ -77,7 +77,17 @@ void		SFML::drawFloor(int x, int y) const
 	rect.setPosition(x, y);
 	_window->draw(rect);
 }
+/*
 
+  haut
+  bas
+  gauche			quad1.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
+  droite
+
+
+
+
+*/
 void		SFML::drawSnakeHead(int x, int y) const
 {
 	sf::ConvexShape quad1;
@@ -151,11 +161,11 @@ void		SFML::draw(void)
 			mdraw(x + y * _game->width, i, j);
 			x += 1;
 			i += _scale + 1;
-			j += _scale + 1;
+			j += (_scale / 2) + 1;
 		}
 		y += 1;
 		i = middle - ((_scale * y) + y);
-		j = ((_scale * y) + y);
+		j = ((_scale / 2 * y) + y);
 	}
 
 	_window->display();

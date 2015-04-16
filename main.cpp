@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		std::cout << "Usage: ./Client <library.so>" << std::endl;
+		std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
 		return (0);
 	}
 
