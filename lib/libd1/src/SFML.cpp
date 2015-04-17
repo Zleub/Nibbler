@@ -34,9 +34,14 @@ void		SFML::init(Game * game)
 {
 	std::cout << "SFML init 1" << std::endl;
 
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
 	_window = new sf::RenderWindow(
 		sf::VideoMode(game->width * this->_scale * 2, game->height * this->_scale * 2),
-		"SFML window"
+		"SFML window",
+		sf::Style::Default,
+		settings
 		);
 	_game = game;
 }
@@ -75,7 +80,7 @@ void		SFML::drawFloor(int x, int y) const
 	rect.setPoint(2, sf::Vector2f(0, _scale));
 	rect.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
 	rect.setPosition(x, y);
-	rect.setOutlineColor(sf::Color(77, 77, 77));
+	rect.setOutlineColor(sf::Color(150, 150, 150));
 	_window->draw(rect);
 }
 
@@ -90,7 +95,7 @@ void		SFML::drawSnakeHead(int x, int y) const
 	quad1.setPosition(x, y);
 
 	quad1.setFillColor(sf::Color(76, 153, 0));
-	quad1.setOutlineColor(sf::Color(77, 77, 77));
+	quad1.setOutlineColor(sf::Color::Black);
 	quad1.setOutlineThickness(1);
 	_window->draw(quad1);
 
