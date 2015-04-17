@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-17 19:22:25
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 19:58:16
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:06:29
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -84,6 +84,7 @@ Client &	Socket::_accept(void)
 
 void		Socket::_write(int fd, std::string str)
 {
+	str += '\n';
 	write(fd, str.c_str(), str.size());
 }
 
