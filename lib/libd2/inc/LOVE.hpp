@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 21:30:12
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:03:02
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -17,12 +17,13 @@
 #define LOVE_HPP
 
 #include <IGlib.hpp>
+#include <Socket.hpp>
 
 class Love : public IGlib {
 private:
-	int						_scale;
-	int						_fd;
-	Game					* _game;
+	int						_closed;
+	Socket *				_socket;
+	Game *					_game;
 
 	void					checkError(void) const ;
 	void					assign(void);
@@ -34,8 +35,6 @@ public:
 
 	IGlib &	operator=(IGlib const &);
 
-	static int				isClosed;
-
 	void					init(Game *) ;
 	void					update(void);
 	void					draw(void);
@@ -43,6 +42,8 @@ public:
 	bool					popEvent(void) ;
 	IGlib::Event const *	getEvent(void) ;
 	void					pushEvent(IGlib::Event *) ;
+
+	void					Close(void);
 };
 
 #endif

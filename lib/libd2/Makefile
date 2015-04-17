@@ -1,7 +1,9 @@
 NAME =	libd2.so
 INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
-SRC =	src/LOVE.cpp
+SRC =	src/Socket.cpp\
+		src/Client.cpp\
+		src/LOVE.cpp
 
 CC		=	clang++
 FLAGS	=	-Wall -Werror -Wextra

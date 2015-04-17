@@ -1,0 +1,51 @@
+make -C lib
+make -C libd1
+make[2]: Nothing to be done for `all'.
+make -C libd2
+make[2]: Nothing to be done for `all'.
+Love init 1: you need love in your PATH
+dad
+c++ update
+new client on 4
+Client 4 left
+load
+tcp{client}: 0x929a710
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+update
+20
