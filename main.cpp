@@ -41,12 +41,14 @@ int	main(int ac, char **av)
 		if (ac == 1)
 		{
 			std::string reponse;
+			std::cout << "\033[0;32m" << std::endl;
 			std::cout << "       -------       Nibbler       -------       " << std::endl;
 			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
 			std::cout << "No library specified, please choose :" << std::endl;
 			std::cout << "[1] SFML library ('lib/libd1/libd1.so')" << std::endl;
 			std::cout << "[2] LOVE library ('lib/libd2/libd2.so')" << std::endl;
 			std::cout << "[3] OTHER library ('path/to/lib.so')" << std::endl;
+			std::cout << "\033[0;0m" << std::endl;
 			std::cin >> reponse;
 			if (reponse != "1" && reponse != "2" && reponse != "3")
 				wrong = true;
@@ -64,7 +66,7 @@ int	main(int ac, char **av)
 				}
 			if (reponse == "3")
 			{
-				std::cout << "LIBRARY PATH : ";
+				std::cout << "\033[0;32mLIBRARY PATH : \033[0;0m";
 				std::cin >> reponse;
 				std::cout << std::endl;
 				if (!(_dl_handle = dlopen(reponse.c_str(), RTLD_LAZY | RTLD_LOCAL)))
