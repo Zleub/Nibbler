@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-17 19:22:25
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:06:29
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:10:33
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -14,7 +14,8 @@
 //          .-::::-`
 
 #include <sstream>
-#include "Socket.hpp"
+#include <Socket.hpp>
+#include <LOVE.hpp>
 
 Socket::Socket(std::string host, int port) : _nbClients(0)
 {
@@ -62,6 +63,7 @@ void	Socket::_select(void)
 					close (i);
 					FD_CLR (i, &active_fd_set);
 					_nbClients -= 1;
+					Love::Closed = 1;
 				}
 			}
 		}

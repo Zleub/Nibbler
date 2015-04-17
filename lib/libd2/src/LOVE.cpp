@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:06:35
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:11:10
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -38,7 +38,9 @@ IGlib::Event const &		IGlib::Event::operator=(IGlib::Event const & rhs)
 
 /* * * * */
 
-Love::Love(void) : _closed(0) {}
+int			Love::Closed = 0;
+
+Love::Love(void) {}
 Love::~Love(void) {}
 
 IGlib &		Love::operator=(IGlib const &)
@@ -87,8 +89,7 @@ void					Love::draw(void) {
 	_socket->_write(4, "caca !");
 	i += 1;
 }
-void					Love::Close(void) { _closed = 1; }
-bool					Love::isOpen(void) { if (_closed) return false; else return true; }
+bool					Love::isOpen(void) { if (Love::Closed) return false; else return true; }
 bool					Love::popEvent(void) { return false; }
 IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }
 

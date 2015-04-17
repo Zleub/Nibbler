@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:03:02
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:10:53
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -43,7 +43,7 @@ public:
 	IGlib::Event const *	getEvent(void) ;
 	void					pushEvent(IGlib::Event *) ;
 
-	void					Close(void);
+	static int				Closed;
 };
 
 #endif
