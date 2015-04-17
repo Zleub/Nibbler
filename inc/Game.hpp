@@ -30,7 +30,7 @@ public:
 		EMPTY,
 		SNAKE_HEAD,
 		SNAKE_BODY,
-		FOOD
+		SNAKE_FOOD
 	};
 
 	Game(void) ;

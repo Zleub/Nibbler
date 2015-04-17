@@ -35,6 +35,7 @@ int	main(int ac, char **av)
 	void		* _dl_handle;
 	bool		wrong = false;
 
+	// PARSING ARGS
 	if (ac != 2)
 	{
 		if (ac == 1)
@@ -72,21 +73,18 @@ int	main(int ac, char **av)
 					throw IGlib::Exception();
 				}
 			}
-
 			if (wrong == true)
 			{
 				std::cout << "Nibbler: Library not loaded please refer to usage." << std::endl;
 				std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
 				return (0);
 			}
-
 		}
 		else
 		{
 			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
 			return (0);
 		}
-
 	}
 	else
 	{
@@ -94,20 +92,14 @@ int	main(int ac, char **av)
 			throw IGlib::Exception();
 	}
 
-	// if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-
-
 	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
-
 	IGlib * p;
 
 	p = _create_t();
-
 	p->init(&game);
 	while (p->isOpen())
 	{
 		IGlib::Event const * e;
-
 		p->update();
 		do
 		{

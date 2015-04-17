@@ -21,7 +21,15 @@ Game::Game(void) {
 	this->width = 11;
 	this->height = 11;
 
+	// TEST MAP
 	while (++i != this->width * this->height)
 		this->map.push_back(Game::EMPTY);
+	this->map[40] = Game::SNAKE_BODY;
+	this->map[41] = Game::SNAKE_BODY;
+	this->map[42] = Game::SNAKE_BODY;
+	this->map[51] = Game::SNAKE_BODY;
 	this->map[60] = Game::SNAKE_HEAD;
+	this->map[61] = Game::SNAKE_BODY;
+	this->map[62] = Game::SNAKE_BODY;
+	this->map[80] = Game::SNAKE_FOOD;
 }

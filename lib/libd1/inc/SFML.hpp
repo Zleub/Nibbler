@@ -30,6 +30,8 @@ private:
 	void					mdraw(int, int, int) const ;
 	void					drawFloor(int x, int y) const ;
 	void					drawSnakeHead(int x, int y) const ;
+	void					drawSnakeBody(int x, int y) const ;
+	void					drawSnakeFood(int x, int y) const ;
 
 public:
 	SFML(void);
