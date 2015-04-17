@@ -18,6 +18,11 @@
 
 #include <IGlib.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
+//#include <iostream>
+#include <thread>
+
 
 class SFML : public IGlib {
 private:
@@ -41,6 +46,7 @@ public:
 	IGlib &	operator=(IGlib const &);
 
 	void					init(Game *) ;
+static	void					playMusic(void) ;
 	void					update(void);
 	void					draw(void);
 	bool					isOpen(void);

@@ -30,6 +30,26 @@ IGlib &		SFML::operator=(IGlib const &)
 
 void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
+void		SFML::playMusic(void)
+{
+	// GAME MUSIC
+	std::cout << "THREAD: DURING" << std::endl;
+
+	sf::Music music;
+	if (!music.openFromFile("music/got.ogg"))
+	std::cout << "Nibbler (SFML): Could not load game music." << std::endl;
+	music.play();
+
+	// la musique s'arrete a la sortie de la fonction
+
+	// attends la fin de la lecture,
+	// puis relance un autre thread musical
+	while (music.getStatus() == 2)
+		;
+	music.stop();
+	std::thread (playMusic).detach();
+}
+
 void		SFML::init(Game * game)
 {
 	std::cout << "SFML init 1" << std::endl;
@@ -44,6 +64,9 @@ void		SFML::init(Game * game)
 		settings
 		);
 	_game = game;
+
+	// GAME MUSIC PLAYED IN A SPECIFIC THREAD
+	std::thread (this->playMusic).detach();
 }
 
 void		SFML::update(void)

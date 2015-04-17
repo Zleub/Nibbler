@@ -14,10 +14,11 @@ INC		+=	-I../../ext/SFML-2.2/include
 #INC		+=	-I../../ext/lua-5.3.0/src/
 
 LIBS	=	-L../../ext/SFML-2.2/lib
-LIBS	+=	-lsfml-graphics
-LIBS	+=	-lsfml-window
-LIBS	+=	-lsfml-system
-LIBS	+=	-lsfml-audio
+LIBS	+= -lsfml-audio
+LIBS	+=-lsfml-graphics
+LIBS	+=-lsfml-network
+LIBS	+=-lsfml-window
+LIBS	+=-lsfml-system
 
 .PHONY: all re clean fclean
 
