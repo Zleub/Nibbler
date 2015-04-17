@@ -14,6 +14,7 @@ INC		+=	-I../../ext/SFML-2.2/include
 #INC		+=	-I../../ext/lua-5.3.0/src/
 
 LIBS	=	-L../../ext/SFML-2.2/lib
+# LAISSER DANS CET ORDRE
 LIBS	+= -lsfml-audio
 LIBS	+=-lsfml-graphics
 LIBS	+=-lsfml-network

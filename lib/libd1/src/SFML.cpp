@@ -33,7 +33,6 @@ void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 void		SFML::playMusic(void)
 {
 	// GAME MUSIC
-	std::cout << "THREAD: DURING" << std::endl;
 
 	sf::Music music;
 	if (!music.openFromFile("music/got.ogg"))
