@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:42:56
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 05:13:54
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -55,14 +55,18 @@ public:
 	int					getWidth(void) const ;
 	int					getHeight(void) const ;
 	Snake::Directions	getSnakeDirection(void) const ;
+
+	void				update(void) ;
+private:
 	void				menu(void) ;
 	std::string			usage(void) ;
 	void				init(void) ;
 	void				load(std::string) ;
 	void				load(char) ;
-	void				update(void) ;
-	void				moveSnake(void) ;
-private:
+	void				moveSnakeHead(void) ;
+	void				collide(std::vector<Cells>::iterator, int);
+	void				moveSnakeBody(std::vector<Cells>::iterator, int);
+
 	Game(Game const & obj) { *this = obj; } ;
 	Game &				operator=(Game const & rhs);
 
