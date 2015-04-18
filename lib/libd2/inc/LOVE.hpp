@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:10:53
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 19:02:23
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -27,7 +27,7 @@ private:
 
 	void					checkError(void) const ;
 	void					assign(void);
-
+	std::string				makeView(int, int);
 public:
 	Love(void);
 	Love(Love const &);

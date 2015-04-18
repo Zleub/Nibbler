@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 08:27:55
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 18:56:28
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <sstream>
 
+#include <vector>
 #include <IGlib_Event.hpp>
 #include <IGlib_Exception.hpp>
 
@@ -61,6 +62,7 @@ void				Game::init(void) {
 	while (++i != _width * _height) {
 		_map_overtime.push_back(0);
 	}
+	_map_overtime[_width * _height / 2 - 2 - _height] = 2;
 
 	_map_overtime[_width * _height / 2] = 11;
 	_map_overtime[_width * _height / 2 + 1] = 12;
@@ -89,6 +91,7 @@ bool					Game::isOpen(void) { return _glib->isOpen(); }
 int						Game::getWidth(void) const { return _width; }
 int						Game::getHeight(void) const { return _height; }
 Game::Snake::Directions	Game::getSnakeDirection(void) const { return _snake._d; }
+std::vector<int>		Game::getMap(void) const { return _map_overtime; }
 
 void				Game::load(std::string lib) {
 	if (!(_dl_handle = dlopen(lib.c_str(), RTLD_LAZY | RTLD_LOCAL)))

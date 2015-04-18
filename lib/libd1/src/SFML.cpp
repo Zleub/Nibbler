@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 08:24:14
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 15:22:50
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -25,7 +25,7 @@ int				Game::getHeight(void) const { return _height; }
 
 /* * * * * * */
 
-SFML::SFML() : _scale(30) {}
+SFML::SFML() : _scale(10) {}
 
 SFML::~SFML() {}
 
