@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-15 20:20:34
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:04:18
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -20,12 +20,20 @@
 
 class Game {
 public:
+	struct				Snake
+	{
+		enum			Directions
+		{
+			UP,
+			DOWN,
+			LEFT,
+			RIGHT
+		};
 
-	int					width;
-	int					height;
-	std::vector<char>	map;
-
-	enum				map_cells
+		Directions		_d; // direction variable
+		int				_s; // size variable
+	};
+	enum				Cells
 	{
 		EMPTY,
 		SNAKE_HEAD,
@@ -34,11 +42,23 @@ public:
 	};
 
 	Game(void) ;
+	~Game(void) ;
+
+	const Cells &		operator[](std::size_t) const ;
+
+	int					getWidth(void) const ;
+	int					getHeight(void) const ;
+	Snake::Directions	getSnakeDirection(void) const ;
+	void				update(void) ;
+private:
 	Game(Game const & obj) { *this = obj; } ;
-	~Game(void) {} ;
+	Game &				operator=(Game const & rhs);
 
-	Game &					operator=(Game const & rhs);
-
+	int					_width;
+	int					_height;
+	std::vector<Cells>	_map;
+	Snake				_snake;
+	void *				_dl_handle;
 };
 
 #endif

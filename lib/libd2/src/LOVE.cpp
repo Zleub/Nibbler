@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:11:10
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 20:22:53
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -86,6 +86,7 @@ void					Love::draw(void) {
 	static int i;
 
 	std::cout << "Love::draw" << std::endl;
+
 	_socket->_write(4, "caca !");
 	i += 1;
 }

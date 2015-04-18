@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-16 19:45:23
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 01:58:01
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -18,6 +18,12 @@
 #include <SFML.hpp>
 #include <IGlib_Exception.hpp>
 #include <IGlib_Event.hpp>
+
+const Game::Cells &	Game::operator[](std::size_t index) const { return _map[index]; }
+int					Game::getWidth(void) const { return _width; }
+int					Game::getHeight(void) const { return _height; }
+
+/* * * * * * */
 
 SFML::SFML() : _scale(25) {}
 
@@ -57,7 +63,7 @@ void		SFML::init(Game * game)
 	settings.antialiasingLevel = 8;
 
 	_window = new sf::RenderWindow(
-		sf::VideoMode(game->width * this->_scale * 2, game->height * this->_scale * 2),
+		sf::VideoMode(game->getWidth() * this->_scale * 2, game->getHeight() * this->_scale * 2),
 		"SFML window",
 		sf::Style::Default,
 		settings
@@ -239,11 +245,11 @@ void		SFML::drawSnakeFood(int x, int y) const
 
 void		SFML::mdraw(int index, int x, int y) const
 {
-	if (_game->map[index] == Game::SNAKE_HEAD)
+	if ((*_game)[index] == Game::SNAKE_HEAD)
 		drawSnakeHead(x, y);
-	else if (_game->map[index] == Game::SNAKE_BODY)
+	else if ((*_game)[index] == Game::SNAKE_BODY)
 		drawSnakeBody(x, y);
-	else if (_game->map[index] == Game::SNAKE_FOOD)
+	else if ((*_game)[index] == Game::SNAKE_FOOD)
 		drawSnakeFood(x, y);
 	else
 		drawFloor(x, y);
@@ -253,30 +259,30 @@ void		SFML::draw(void)
 {
 	_window->clear();
 
-	int middle = _game->width * this->_scale * 2 / 2;
+	int middle = _game->getWidth() * this->_scale * 2 / 2;
 
 	int i;
 	int j;
 
 	i = middle;
-	j = (_game->height * _scale / 2) - ((_scale / 2) + 1) * (_game->height / 2);
+	j = 0;
 
 	int x;
 	int y = 0;
 
-	while (y < _game->height)
+	while (y < _game->getHeight())
 	{
 		x = 0;
-		while (x < _game->width)
+		while (x < _game->getWidth())
 		{
-			mdraw(x + y * _game->width, i, j);
+			mdraw(x + y * _game->getWidth(), i, j);
 			x += 1;
-			i += _scale + 1;
-			j += (_scale / 2) + 1;
+			i += _scale;
+			j += _scale;
 		}
 		y += 1;
-		i = middle - ((_scale * y) + y);
-		j = (_game->height * _scale / 2) - ((_scale / 2) + 1) * (_game->height / 2) + ((_scale / 2 * y) + y);
+		i = middle - ((_scale * y) );
+		j = ((_scale * y) );
 	}
 
 	_window->display();

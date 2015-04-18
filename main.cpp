@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 00:06:54
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:04:55
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -32,7 +32,7 @@ const char * IGlib::Exception::what() const throw() {
 int	main(int ac, char **av)
 {
 	Game		game;
-	void		* _dl_handle;
+	// void		* _dl_handle;
 	bool		wrong = false;
 
 	// PARSING ARGS
@@ -101,29 +101,7 @@ int	main(int ac, char **av)
 	p->init(&game);
 	while (p->isOpen())
 	{
-		IGlib::Event const * e;
-		p->update();
-		do
-		{
-			e = p->getEvent();
-
-			// KEYBOARD INPUT
-
-			if (e->key == IGlib::ESC)
-				std::cout << "ESC" << std::endl;
-			if (e->key == IGlib::UP)
-				std::cout << "UP" << std::endl;
-			if (e->key == IGlib::DOWN)
-				std::cout << "DOWN" << std::endl;
-			if (e->key == IGlib::LEFT)
-				std::cout << "LEFT" << std::endl;
-			if (e->key == IGlib::RIGHT)
-				std::cout << "RIGHT" << std::endl;
-			else if (e->key == IGlib::EMPTY)
-				; //std::cout << "EMPTY" << std::endl;
-
-
-		} while (p->popEvent()) ;
+		game.update();
 		p->draw();
 	}
 	return (0);
