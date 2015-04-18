@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:04:55
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:33:27
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -29,80 +29,11 @@ const char * IGlib::Exception::what() const throw() {
 	return "IGlib::Exception";
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char *av[])
 {
-	Game		game;
-	// void		* _dl_handle;
-	bool		wrong = false;
+	Game		game(ac, av);
 
-	// PARSING ARGS
-	if (ac != 2)
-	{
-		if (ac == 1)
-		{
-			std::string reponse;
-			std::cout << "\033[0;32m" << std::endl;
-			std::cout << "       -------       Nibbler       -------       " << std::endl;
-			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
-			std::cout << "No library specified, please choose :" << std::endl;
-			std::cout << "[1] SFML library ('lib/libd1/libd1.so')" << std::endl;
-			std::cout << "[2] LOVE library ('lib/libd2/libd2.so')" << std::endl;
-			std::cout << "[3] OTHER library ('path/to/lib.so')" << std::endl;
-			std::cout << "\033[0;0m" << std::endl;
-			std::cin >> reponse;
-			if (reponse != "1" && reponse != "2" && reponse != "3")
-				wrong = true;
-			if (reponse == "1")
-				if (!(_dl_handle = dlopen("lib/libd1/libd1.so", RTLD_LAZY | RTLD_LOCAL)))
-				{
-					wrong = true;
-					throw IGlib::Exception();
-				}
-			if (reponse == "2")
-				if (!(_dl_handle = dlopen("lib/libd2/libd2.so", RTLD_LAZY | RTLD_LOCAL)))
-				{
-					wrong = true;
-					throw IGlib::Exception();
-				}
-			if (reponse == "3")
-			{
-				std::cout << "\033[0;32mLIBRARY PATH : \033[0;0m";
-				std::cin >> reponse;
-				std::cout << std::endl;
-				if (!(_dl_handle = dlopen(reponse.c_str(), RTLD_LAZY | RTLD_LOCAL)))
-				{
-					wrong = true;
-					throw IGlib::Exception();
-				}
-			}
-			if (wrong == true)
-			{
-				std::cout << "Nibbler: Library not loaded please refer to usage." << std::endl;
-				std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
-				return (0);
-			}
-		}
-		else
-		{
-			std::cout << "Usage: ./Nibbler <library.so>" << std::endl;
-			return (0);
-		}
-	}
-	else
-	{
-		if (!(_dl_handle = dlopen(av[1], RTLD_LAZY | RTLD_LOCAL)))
-			throw IGlib::Exception();
-	}
-
-	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
-	IGlib * p;
-
-	p = _create_t();
-	p->init(&game);
-	while (p->isOpen())
-	{
+	while (game.isOpen())
 		game.update();
-		p->draw();
-	}
 	return (0);
 }

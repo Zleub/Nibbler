@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:04:18
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:27:33
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -17,9 +17,13 @@
 #define GAME_HPP
 
 #include <vector>
+#include <IGlib.hpp>
+
+class IGlib;
 
 class Game {
 public:
+	// class				Exception;
 	struct				Snake
 	{
 		enum			Directions
@@ -42,13 +46,19 @@ public:
 	};
 
 	Game(void) ;
+	Game(int, char**) ;
 	~Game(void) ;
 
 	const Cells &		operator[](std::size_t) const ;
+	bool				isOpen(void) ;
 
 	int					getWidth(void) const ;
 	int					getHeight(void) const ;
 	Snake::Directions	getSnakeDirection(void) const ;
+	void				menu(void) ;
+	std::string			usage(void) ;
+	void				load(std::string) ;
+	void				load(char) ;
 	void				update(void) ;
 private:
 	Game(Game const & obj) { *this = obj; } ;
@@ -59,6 +69,7 @@ private:
 	std::vector<Cells>	_map;
 	Snake				_snake;
 	void *				_dl_handle;
+	IGlib *				_glib;
 };
 
 #endif
