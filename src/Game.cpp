@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:32:20
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:53:10
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -25,37 +25,11 @@ extern "C" {
 }
 
 Game::Game(void) : _width(11), _height(11) {
-	int i = -1;
-
-	// TEST MAP
-	while (++i != this->getWidth() * this->getHeight())
-		_map.push_back(Game::EMPTY);
-	_map[40] = Game::SNAKE_BODY;
-	_map[41] = Game::SNAKE_BODY;
-	_map[42] = Game::SNAKE_BODY;
-	_map[51] = Game::SNAKE_BODY;
-	_map[60] = Game::SNAKE_HEAD;
-	_map[61] = Game::SNAKE_BODY;
-	_map[62] = Game::SNAKE_BODY;
-	_map[80] = Game::SNAKE_FOOD;
+	init();
 }
 
 Game::Game(int argc, char** argv) : _width(11), _height(11) {
-	int i = -1;
-
-	// TEST MAP
-	while (++i != this->getWidth() * this->getHeight())
-		_map.push_back(Game::EMPTY);
-	_map[40] = Game::SNAKE_BODY;
-	_map[41] = Game::SNAKE_BODY;
-	_map[42] = Game::SNAKE_BODY;
-	_map[51] = Game::SNAKE_BODY;
-	_map[60] = Game::SNAKE_HEAD;
-	_map[61] = Game::SNAKE_BODY;
-	_map[62] = Game::SNAKE_BODY;
-	_map[80] = Game::SNAKE_FOOD;
-
-	std::cout << "checkpoint" << std::endl;
+	init();
 
 	if (argc == 2) {
 		try {
@@ -78,6 +52,16 @@ Game::Game(int argc, char** argv) : _width(11), _height(11) {
 }
 
 Game::~Game(void) {}
+
+void				Game::init(void) {
+	int i = -1;
+
+	while (++i != this->getWidth() * this->getHeight())
+		_map.push_back(Game::EMPTY);
+	_map[this->getWidth() * this->getHeight() / 2] = SNAKE_HEAD;
+	_snake._d = Game::Snake::LEFT;
+	_snake._s = 1;
+}
 
 std::string			Game::usage(void) {
 	std::stringstream ss;
@@ -102,6 +86,10 @@ Game::Snake::Directions	Game::getSnakeDirection(void) const { return _snake._d; 
 void				Game::load(std::string lib) {
 	if (!(_dl_handle = dlopen(lib.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		throw IGlib::Exception();
+	IGlib * (* _create_t)(void) = (create_t *)(dlsym(_dl_handle, "create"));
+	if (!(_glib = _create_t()))
+		throw IGlib::Exception();
+	_glib->init(this);
 }
 
 void				Game::load(char lib) {
@@ -117,8 +105,15 @@ void				Game::load(char lib) {
 }
 
 void				Game::update(void) {
+	static int i;
 	IGlib::Event const * e;
 
+	i += 1;
+	if (i > 100)
+	{
+		moveSnake();
+		i = 0;
+	}
 	_glib->update();
 	do
 	{
@@ -128,17 +123,57 @@ void				Game::update(void) {
 
 		if (e->key == IGlib::ESC)
 			std::cout << "ESC" << std::endl;
-		if (e->key == IGlib::UP)
+		if (e->key == IGlib::UP) {
 			std::cout << "UP" << std::endl;
-		if (e->key == IGlib::DOWN)
+			_snake._d = Game::Snake::UP;
+		}
+
+		if (e->key == IGlib::DOWN) {
 			std::cout << "DOWN" << std::endl;
-		if (e->key == IGlib::LEFT)
+			_snake._d = Game::Snake::DOWN;
+		}
+
+		if (e->key == IGlib::LEFT) {
 			std::cout << "LEFT" << std::endl;
-		if (e->key == IGlib::RIGHT)
+			_snake._d = Game::Snake::LEFT;
+		}
+
+		if (e->key == IGlib::RIGHT) {
 			std::cout << "RIGHT" << std::endl;
+			_snake._d = Game::Snake::RIGHT;
+		}
+
 		else if (e->key == IGlib::EMPTY)
 			; //std::cout << "EMPTY" << std::endl;
 
 	} while (_glib->popEvent()) ;
 	_glib->draw();
+}
+
+void				Game::moveSnake()
+{
+	std::vector<Game::Cells>::iterator it;
+
+	it = std::find(_map.begin(), _map.end(), Game::SNAKE_HEAD);
+	if (it == _map.end())
+		std::cout << "snake has no head" << std::endl;
+	else {
+		if (_snake._d == Game::Snake::LEFT) {
+			*it = Game::EMPTY;
+			it -= 1;
+			*it = Game::SNAKE_HEAD;
+		} else if (_snake._d == Game::Snake::RIGHT) {
+			*it = Game::EMPTY;
+			it += 1;
+			*it = Game::SNAKE_HEAD;
+		} else if (_snake._d == Game::Snake::UP) {
+			*it = Game::EMPTY;
+			it -= _width;
+			*it = Game::SNAKE_HEAD;
+		} else if (_snake._d == Game::Snake::DOWN) {
+			*it = Game::EMPTY;
+			it += _width;
+			*it = Game::SNAKE_HEAD;
+		}
+	}
 }

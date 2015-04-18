@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 01:58:01
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:39:19
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -40,19 +40,19 @@ void		SFML::playMusic(void)
 {
 	// GAME MUSIC
 
-	sf::Music music;
-	if (!music.openFromFile("music/got.ogg"))
-	std::cout << "Nibbler (SFML): Could not load game music." << std::endl;
-	music.play();
+	// sf::Music music;
+	// if (!music.openFromFile("music/got.ogg"))
+	// std::cout << "Nibbler (SFML): Could not load game music." << std::endl;
+	// music.play();
 
-	// la musique s'arrete a la sortie de la fonction
+	// // la musique s'arrete a la sortie de la fonction
 
-	// attends la fin de la lecture,
-	// puis relance un autre thread musical
-	while (music.getStatus() == 2)
-		;
-	music.stop();
-	std::thread (playMusic).detach();
+	// // attends la fin de la lecture,
+	// // puis relance un autre thread musical
+	// while (music.getStatus() == 2)
+	// 	;
+	// music.stop();
+	// std::thread (playMusic).detach();
 }
 
 void		SFML::init(Game * game)

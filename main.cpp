@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-04 23:19:27
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:33:27
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:36:28
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -17,10 +17,6 @@
 
 #include <IGlib_Event.hpp>
 #include <IGlib_Exception.hpp>
-
-extern "C" {
-	#include <dlfcn.h>
-}
 
 IGlib::Exception::Exception() {}
 IGlib::Exception::~Exception() throw() {}

@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:27:33
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:42:56
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -57,9 +57,11 @@ public:
 	Snake::Directions	getSnakeDirection(void) const ;
 	void				menu(void) ;
 	std::string			usage(void) ;
+	void				init(void) ;
 	void				load(std::string) ;
 	void				load(char) ;
 	void				update(void) ;
+	void				moveSnake(void) ;
 private:
 	Game(Game const & obj) { *this = obj; } ;
 	Game &				operator=(Game const & rhs);
