@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 07:39:35
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 08:27:55
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -28,7 +28,7 @@ Game::Game(void) : _width(11), _height(11) {
 	init();
 }
 
-Game::Game(int argc, char** argv) : _width(11), _height(11) {
+Game::Game(int argc, char** argv) : _width(15), _height(15) {
 	init();
 
 	if (argc == 2) {
@@ -58,7 +58,7 @@ Game::~Game(void) {}
 void				Game::init(void) {
 	int i = -1;
 
-	while (++i != this->getWidth() * this->getHeight()) {
+	while (++i != _width * _height) {
 		_map_overtime.push_back(0);
 	}
 
@@ -117,7 +117,7 @@ void				Game::update(void) {
 	IGlib::Event const * e;
 
 	i += 1;
-	if (i > 200) // TIC
+	if (i > 100) // TIC
 	{
 		moveSnake();
 		i = 0;
@@ -225,6 +225,7 @@ void				Game::moveSnake()
 		std::cout << "snake has no head" << std::endl;
 	else {
 		int		diff = it - _map_overtime.begin();
+
 		if (_snake._d == Game::Snake::LEFT) {
 			if (diff % _width > 0) {
 				collide(diff - 1, 11);

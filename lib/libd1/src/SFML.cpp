@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 07:38:00
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 08:24:14
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -25,7 +25,7 @@ int				Game::getHeight(void) const { return _height; }
 
 /* * * * * * */
 
-SFML::SFML() : _scale(25) {}
+SFML::SFML() : _scale(30) {}
 
 SFML::~SFML() {}
 
@@ -57,13 +57,21 @@ void		SFML::playMusic(void)
 
 void		SFML::init(Game * game)
 {
+	_w = game->getWidth();
+	_h = game->getHeight();
+
+	if (_w < _h)
+		_w = _h;
+	else if (_w > _h)
+		_h = _w;
+
 	std::cout << "SFML init 1" << std::endl;
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
 	_window = new sf::RenderWindow(
-		sf::VideoMode(game->getWidth() * this->_scale * 2, game->getHeight() * this->_scale * 2),
+		sf::VideoMode(_w * this->_scale * 2, _h * this->_scale * 2),
 		"SFML window",
 		sf::Style::Default,
 		settings
@@ -113,7 +121,7 @@ void		SFML::drawFloor(int x, int y) const
 	_window->draw(rect);
 }
 
-void		SFML::drawSnakeHead(int x, int y) const
+void		SFML::drawSnake(int part, int x, int y) const
 {
 	sf::ConvexShape quad1;
 	quad1.setPointCount(4);
@@ -122,10 +130,15 @@ void		SFML::drawSnakeHead(int x, int y) const
 	quad1.setPoint(2, sf::Vector2f(0, _scale));
 	quad1.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
 	quad1.setPosition(x, y);
-
-	quad1.setFillColor(sf::Color(76, 153, 0));
-	quad1.setOutlineColor(sf::Color::Black);
-	quad1.setOutlineThickness(0.5);
+	if (part == 1) {
+		quad1.setFillColor(sf::Color(204, 102, 0));
+		quad1.setOutlineColor(sf::Color::Black);
+		quad1.setOutlineThickness(0.5);
+	} else if (part == 0) {
+		quad1.setFillColor(sf::Color(76, 153, 0));
+		quad1.setOutlineColor(sf::Color::Black);
+		quad1.setOutlineThickness(0.5);
+	}
 	_window->draw(quad1);
 
 	sf::ConvexShape quad2;
@@ -135,122 +148,87 @@ void		SFML::drawSnakeHead(int x, int y) const
 	quad2.setPoint(2, sf::Vector2f(0, _scale));
 	quad2.setPoint(3, sf::Vector2f(0, _scale / 2));
 	quad2.setPosition(x, y);
-	quad2.setOutlineThickness(0.5);
-	quad2.setFillColor(sf::Color(76, 153, 0));
-	quad2.setOutlineColor(sf::Color::Black);
+	if (part == 1) {
+		quad2.setFillColor(sf::Color(153, 76, 0));
+		quad2.setOutlineColor(sf::Color::Black);
+		quad2.setOutlineThickness(0.5);
+	} else if (part == 0) {
+		quad2.setOutlineThickness(0.5);
+		quad2.setFillColor(sf::Color(76, 153, 0));
+		quad2.setOutlineColor(sf::Color::Black);
+	}
 	_window->draw(quad2);
 
 	sf::ConvexShape quad3;
 	quad3.setPointCount(4);
-	quad3.setPoint(0, sf::Vector2f(0, -_scale / 2));
-	quad3.setPoint(1, sf::Vector2f(_scale, 0));
-	quad3.setPoint(2, sf::Vector2f(0, _scale / 2));
-	quad3.setPoint(3, sf::Vector2f(-_scale, 0));
-	quad3.setPosition(x, y);
-	quad3.setOutlineThickness(0.5);
-	quad3.setFillColor(sf::Color(102, 204, 0));
-	quad3.setOutlineColor(sf::Color::Black);
-	_window->draw(quad3);
-}
-
-void		SFML::drawSnakeBody(int x, int y) const
-{
-	sf::ConvexShape quad1;
-	quad1.setPointCount(4);
-	quad1.setPoint(0, sf::Vector2f(-_scale, 0));
-	quad1.setPoint(1, sf::Vector2f(0, _scale / 2));
-	quad1.setPoint(2, sf::Vector2f(0, _scale));
-	quad1.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
-	quad1.setPosition(x, y);
-
-	quad1.setFillColor(sf::Color(204, 102, 0));
-	quad1.setOutlineColor(sf::Color::Black);
-	quad1.setOutlineThickness(0.5);
-	_window->draw(quad1);
-
-	sf::ConvexShape quad2;
-	quad2.setPointCount(4);
-	quad2.setPoint(0, sf::Vector2f(_scale, 0));
-	quad2.setPoint(1, sf::Vector2f(_scale, _scale / 2));
-	quad2.setPoint(2, sf::Vector2f(0, _scale));
-	quad2.setPoint(3, sf::Vector2f(0, _scale / 2));
-	quad2.setPosition(x, y);
-	quad2.setFillColor(sf::Color(153, 76, 0));
-	quad2.setOutlineColor(sf::Color::Black);
-	quad2.setOutlineThickness(0.5);
-	_window->draw(quad2);
-
-	sf::ConvexShape quad3;
-	quad3.setPointCount(4);
-	quad3.setPoint(0, sf::Vector2f(0, -_scale / 2));
-	quad3.setPoint(1, sf::Vector2f(_scale, 0));
-	quad3.setPoint(2, sf::Vector2f(0, _scale / 2));
-	quad3.setPoint(3, sf::Vector2f(-_scale, 0));
-	quad3.setPosition(x, y);
-
-	quad3.setFillColor(sf::Color(255, 128, 0));
-	quad3.setOutlineColor(sf::Color::Black);
-	quad3.setOutlineThickness(0.5);
+	quad3.setPoint(0, sf::Vector2f(0, 0));
+	quad3.setPoint(1, sf::Vector2f(_scale, _scale / 2));
+	quad3.setPoint(2, sf::Vector2f(0, _scale));
+	quad3.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
+	quad3.setPosition(x, y - _scale / 2);
+	if (part == 1) {
+		quad3.setFillColor(sf::Color(255, 128, 0));
+		quad3.setOutlineColor(sf::Color::Black);
+		quad3.setOutlineThickness(0.5);
+	} else if (part == 0) {
+		quad3.setOutlineThickness(0.5);
+		quad3.setFillColor(sf::Color(102, 204, 0));
+		quad3.setOutlineColor(sf::Color::Black);
+	}
 	_window->draw(quad3);
 }
 
 void		SFML::drawSnakeFood(int x, int y) const
 {
-	sf::ConvexShape rect;
+	drawFloor(x, y);
 
-	rect.setPointCount(4);
-	rect.setPoint(0, sf::Vector2f(0, 0));
-	rect.setPoint(1, sf::Vector2f(_scale, _scale / 2));
-	rect.setPoint(2, sf::Vector2f(0, _scale));
-	rect.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
-	rect.setPosition(x, y);
-	rect.setOutlineThickness(0.5);
-	rect.setOutlineColor(sf::Color(77, 77, 77));
-	_window->draw(rect);
+	// THIS IS BULLSHIT NOT RESPONSIVE TO SCALE
+	//
+		sf::CircleShape circle(50);
+		circle.setRadius(8);
+		circle.setPosition(x - (_scale / 2) + 4, y + 4);
+		circle.setFillColor(sf::Color(150, 0, 0));
+		_window->draw(circle);
+		sf::CircleShape circle2(50);
+		circle2.setRadius(7);
+		circle2.setPosition(x - (_scale / 2) + 5, y + 5);
+		circle2.setFillColor(sf::Color(204, 0, 0));
+		_window->draw(circle2);
+		sf::CircleShape circle3(50);
+		circle3.setRadius(2);
+		circle3.setPosition(x - (_scale / 2) + 13, y + 6);
+		circle3.setFillColor(sf::Color(255, 100, 100));
+		_window->draw(circle3);
 
-	sf::CircleShape circle(50);
-	circle.setRadius(8);
-	circle.setPosition(x - (_scale / 2) + 4, y + 4);
-	circle.setFillColor(sf::Color(150, 0, 0));
-	_window->draw(circle);
-	sf::CircleShape circle2(50);
-	circle2.setRadius(7);
-	circle2.setPosition(x - (_scale / 2) + 5, y + 5);
-	circle2.setFillColor(sf::Color(204, 0, 0));
-	_window->draw(circle2);
-	sf::CircleShape circle3(50);
-	circle3.setRadius(2);
-	circle3.setPosition(x - (_scale / 2) + 13, y + 6);
-	circle3.setFillColor(sf::Color(255, 100, 100));
-	_window->draw(circle3);
-
-	sf::ConvexShape leaf;
-	leaf.setPointCount(3);
-	int _x = x - 20;
-	int _y = y - 7;
-	leaf.setOutlineColor(sf::Color(0, 77, 0));
-	leaf.setOutlineThickness(0.5);
-	leaf.setPoint(0, sf::Vector2f(_x + 19, _y + 13));
-	leaf.setPoint(1, sf::Vector2f(_x + 15, _y + 10));
-	leaf.setPoint(2, sf::Vector2f(_x + 10, _y + 10));
-	leaf.setFillColor(sf::Color(102, 204, 0));
-	_window->draw(leaf);
-	leaf.setPoint(0, sf::Vector2f(_x + 20, _y + 13));
-	leaf.setPoint(1, sf::Vector2f(_x + 25, _y + 10));
-	leaf.setPoint(2, sf::Vector2f(_x + 22, _y + 7));
-	leaf.setFillColor(sf::Color(90, 190, 0));
-	_window->draw(leaf);
+		sf::ConvexShape leaf;
+		leaf.setPointCount(3);
+		int _x = x - 20;
+		int _y = y - 7;
+		leaf.setOutlineColor(sf::Color(0, 77, 0));
+		leaf.setOutlineThickness(0.5);
+		leaf.setPoint(0, sf::Vector2f(_x + 19, _y + 13));
+		leaf.setPoint(1, sf::Vector2f(_x + 15, _y + 10));
+		leaf.setPoint(2, sf::Vector2f(_x + 10, _y + 10));
+		leaf.setFillColor(sf::Color(102, 204, 0));
+		_window->draw(leaf);
+		leaf.setPoint(0, sf::Vector2f(_x + 20, _y + 13));
+		leaf.setPoint(1, sf::Vector2f(_x + 25, _y + 10));
+		leaf.setPoint(2, sf::Vector2f(_x + 22, _y + 7));
+		leaf.setFillColor(sf::Color(90, 190, 0));
+		_window->draw(leaf);
+	//
+	// END
 
 }
 
 void		SFML::mdraw(int index, int x, int y) const
 {
 	if ((*_game)[index] == 11)
-		drawSnakeHead(x, y);
+		drawSnake(0, x, y);
 	else if ((*_game)[index] == 0)
 		drawFloor(x, y);
 	else if ((*_game)[index] > 11)
-		drawSnakeBody(x, y);
+		drawSnake(1, x, y);
 	else if ((*_game)[index] < 11)
 		drawSnakeFood(x, y);
 }
