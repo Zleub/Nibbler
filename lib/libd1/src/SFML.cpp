@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:06:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 02:39:19
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 07:38:00
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -19,9 +19,9 @@
 #include <IGlib_Exception.hpp>
 #include <IGlib_Event.hpp>
 
-const Game::Cells &	Game::operator[](std::size_t index) const { return _map[index]; }
-int					Game::getWidth(void) const { return _width; }
-int					Game::getHeight(void) const { return _height; }
+const int &		Game::operator[](std::size_t index) const { return _map_overtime[index]; }
+int				Game::getWidth(void) const { return _width; }
+int				Game::getHeight(void) const { return _height; }
 
 /* * * * * * */
 
@@ -245,14 +245,14 @@ void		SFML::drawSnakeFood(int x, int y) const
 
 void		SFML::mdraw(int index, int x, int y) const
 {
-	if ((*_game)[index] == Game::SNAKE_HEAD)
+	if ((*_game)[index] == 11)
 		drawSnakeHead(x, y);
-	else if ((*_game)[index] == Game::SNAKE_BODY)
-		drawSnakeBody(x, y);
-	else if ((*_game)[index] == Game::SNAKE_FOOD)
-		drawSnakeFood(x, y);
-	else
+	else if ((*_game)[index] == 0)
 		drawFloor(x, y);
+	else if ((*_game)[index] > 11)
+		drawSnakeBody(x, y);
+	else if ((*_game)[index] < 11)
+		drawSnakeFood(x, y);
 }
 
 void		SFML::draw(void)

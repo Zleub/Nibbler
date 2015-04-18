@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 05:13:54
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 07:36:48
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -49,7 +49,7 @@ public:
 	Game(int, char**) ;
 	~Game(void) ;
 
-	const Cells &		operator[](std::size_t) const ;
+	const int &			operator[](std::size_t) const ;
 	bool				isOpen(void) ;
 
 	int					getWidth(void) const ;
@@ -63,16 +63,17 @@ private:
 	void				init(void) ;
 	void				load(std::string) ;
 	void				load(char) ;
-	void				moveSnakeHead(void) ;
-	void				collide(std::vector<Cells>::iterator, int);
-	void				moveSnakeBody(std::vector<Cells>::iterator, int);
+	void				moveSnake(void) ;
+	void				collide(std::size_t, int);
+	void				moveSnakeBody(std::size_t, int);
+	void				growSnakeBody(std::size_t, int);
 
 	Game(Game const & obj) { *this = obj; } ;
 	Game &				operator=(Game const & rhs);
 
 	int					_width;
 	int					_height;
-	std::vector<Cells>	_map;
+	std::vector<int>	_map_overtime;
 	Snake				_snake;
 	void *				_dl_handle;
 	IGlib *				_glib;

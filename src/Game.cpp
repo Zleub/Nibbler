@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 05:34:57
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 07:39:35
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -58,11 +58,16 @@ Game::~Game(void) {}
 void				Game::init(void) {
 	int i = -1;
 
-	while (++i != this->getWidth() * this->getHeight())
-		_map.push_back(Game::EMPTY);
-	_map[this->getWidth() * this->getHeight() / 2] = SNAKE_HEAD;
+	while (++i != this->getWidth() * this->getHeight()) {
+		_map_overtime.push_back(0);
+	}
+
+	_map_overtime[_width * _height / 2] = 11;
+	_map_overtime[_width * _height / 2 + 1] = 12;
+	_map_overtime[_width * _height / 2 + 2] = 13;
+	_map_overtime[_width * _height / 2 + 3] = 14;
 	_snake._d = Game::Snake::LEFT;
-	_snake._s = 1;
+	_snake._s = 4;
 }
 
 std::string			Game::usage(void) {
@@ -79,7 +84,7 @@ std::string			Game::usage(void) {
 	return ss.str();
 }
 
-const Game::Cells &		Game::operator[](std::size_t index) const { return _map[index]; }
+const int &				Game::operator[](std::size_t index) const { return _map_overtime[index]; }
 bool					Game::isOpen(void) { return _glib->isOpen(); }
 int						Game::getWidth(void) const { return _width; }
 int						Game::getHeight(void) const { return _height; }
@@ -114,12 +119,13 @@ void				Game::update(void) {
 	i += 1;
 	if (i > 200) // TIC
 	{
-		moveSnakeHead();
+		moveSnake();
 		i = 0;
 		if (j == 10) {
 			int index = rand() % (_width * _height - 1);
-			if (_map[index] == Game::EMPTY)
-				_map[index] = Game::SNAKE_FOOD;
+			if (_map_overtime[index] == 0) {
+				_map_overtime[index] = 2;
+			}
 			j = 0;
 		}
 		j += 1;
@@ -160,69 +166,80 @@ void				Game::update(void) {
 	_glib->draw();
 }
 
-void				Game::collide(std::vector<Game::Cells>::iterator it, int inc)
+void				Game::collide(std::size_t index, int prev)
 {
-	if ( *(it + inc) == Game::EMPTY ) {
-		*it = Game::EMPTY;
-		*(it + inc) = Game::SNAKE_HEAD;
-		moveSnakeBody(it, inc);
+	std::vector<int>::iterator it;
+
+	it = std::find(_map_overtime.begin(), _map_overtime.end(), prev);
+
+	if ( _map_overtime[index] == 0 ) {
+		*it = 0;
+		_map_overtime[index] = prev;
+		moveSnakeBody(it - _map_overtime.begin(), prev + 1);
 	}
-	else if (*(it + inc) == Game::SNAKE_FOOD) {
+	else if ( _map_overtime[index] < 11) {
 		std::cout << "SNAKE_FOOD" << std::endl;
-		*it = Game::SNAKE_BODY;
-		*(it + inc) = Game::SNAKE_HEAD;
+		_map_overtime[index] = prev;
+		_snake._s += 1;
+		std::cout << "snake is " << _snake._s << " long" << std::endl;
+		growSnakeBody(it - _map_overtime.begin(), prev + 1);
+		*it = prev + 1;
 	}
 }
 
-void				Game::moveSnakeBody(std::vector<Game::Cells>::iterator it, int inc)
+void				Game::growSnakeBody(std::size_t index, int prev)
 {
-	std::cout << "moveSnakeBody: " << inc << std::endl;
-	if ( inc != -1 && *(it - 1) == Game::SNAKE_BODY) {
-		std::cout << "1" << std::endl;
-		*(it - 1) = Game::EMPTY;
-		moveSnakeBody(it - 1, 1);
-		*it = Game::SNAKE_BODY;
-	} else if ( inc != 1 && *(it + 1) == Game::SNAKE_BODY) {
-		std::cout << "2" << std::endl;
-		*(it + 1) = Game::EMPTY;
-		moveSnakeBody(it + 1, -1);
-		*it = Game::SNAKE_BODY;
-	} else if ( inc != -_height && *(it - _height) == Game::SNAKE_BODY) {
-		std::cout << "3" << std::endl;
-		*(it - _height) = Game::EMPTY;
-		moveSnakeBody(it - _height, _height);
-		*it = Game::SNAKE_BODY;
-	} else if ( inc != _height && *(it + _height) == Game::SNAKE_BODY) {
-		std::cout << "4" << std::endl;
-		*(it + _height) = Game::EMPTY;
-		moveSnakeBody(it + _height, -_height);
-		*it = Game::SNAKE_BODY;
-	}
+	std::vector<int>::iterator it;
+
+	it = std::find(_map_overtime.begin(), _map_overtime.end(), prev);
+	if (it == _map_overtime.end())
+		return ;
+
+	_map_overtime[index] = prev;
+	growSnakeBody(it - _map_overtime.begin(), prev + 1);
+	*it = prev + 1;
 }
 
-void				Game::moveSnakeHead()
+void				Game::moveSnakeBody(std::size_t index, int prev)
 {
-	std::vector<Game::Cells>::iterator it;
+	std::vector<int>::iterator it;
 
-	it = std::find(_map.begin(), _map.end(), Game::SNAKE_HEAD);
-	if (it == _map.end())
+	it = std::find(_map_overtime.begin(), _map_overtime.end(), prev);
+	if (it == _map_overtime.end())
+		return ;
+
+	if ( _map_overtime[index] == 0 ) {
+		*it = 0;
+		_map_overtime[index] = prev;
+		moveSnakeBody(it - _map_overtime.begin(), prev + 1);
+	}
+
+}
+
+void				Game::moveSnake()
+{
+	std::vector<int>::iterator it;
+
+	it = std::find(_map_overtime.begin(), _map_overtime.end(), 11);
+	if (it == _map_overtime.end())
 		std::cout << "snake has no head" << std::endl;
 	else {
+		int		diff = it - _map_overtime.begin();
 		if (_snake._d == Game::Snake::LEFT) {
-			if ((it - _map.begin()) % _width > 0) {
-				collide(it, -1);
+			if (diff % _width > 0) {
+				collide(diff - 1, 11);
 			}
 		} else if (_snake._d == Game::Snake::RIGHT) {
-			if ((it - _map.begin()) % _width < _width - 1) {
-				collide(it, 1);
+			if (diff % _width < _width - 1) {
+				collide(diff + 1, 11);
 			}
 		} else if (_snake._d == Game::Snake::UP) {
-			if ((it - _height - _map.begin()) >= 0) {
-				collide(it, -_height);
+			if ((it - _height - _map_overtime.begin()) >= 0) {
+				collide(diff - _height, 11);
 			}
 		} else if (_snake._d == Game::Snake::DOWN) {
-			if ((it + _height - _map.begin()) < _width * _height) {
-				collide(it, _height);
+			if ((it + _height - _map_overtime.begin()) < _width * _height) {
+				collide(diff + _height, 11);
 			}
 		}
 	}
