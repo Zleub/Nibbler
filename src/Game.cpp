@@ -91,6 +91,7 @@ bool					Game::isOpen(void) { return _glib->isOpen(); }
 int						Game::getWidth(void) const { return _width; }
 int						Game::getHeight(void) const { return _height; }
 Game::Snake::Directions	Game::getSnakeDirection(void) const { return _snake._d; }
+int						Game::getSnakeSize(void) const { return _snake._s; }
 std::vector<int>		Game::getMap(void) const { return _map_overtime; }
 
 void				Game::load(std::string lib) {
@@ -125,10 +126,17 @@ void				Game::update(void) {
 		moveSnake();
 		i = 0;
 		if (j == 10) {
-			int index = rand() % (_width * _height - 1);
-			if (_map_overtime[index] == 0) {
-				_map_overtime[index] = 2;
+
+			int _i = 0;
+			while (_i < _width * _height)
+			{
+				if (_map_overtime[_i] >= SNAKE_FOOD_FRESH && _map_overtime[_i] <= SNAKE_FOOD_ROTTEN)
+					_map_overtime[_i]++;
+				if (_map_overtime[_i] == SNAKE_FOOD_ROTTEN + 1)
+					_map_overtime[_i] = Game::EMPTY;
+				_i++;
 			}
+			newFood();
 			j = 0;
 		}
 		j += 1;
@@ -180,18 +188,46 @@ void				Game::collide(std::size_t index, int prev)
 		_map_overtime[index] = prev;
 		moveSnakeBody(it - _map_overtime.begin(), prev + 1);
 	}
-	else if ( _map_overtime[index] < Game::SNAKE_HEAD) {
+	else if ( _map_overtime[index] >= SNAKE_FOOD_FRESH && _map_overtime[index] <= Game::SNAKE_FOOD_ROTTEN) {
 		std::cout << "SNAKE_FOOD" << std::endl;
 		_map_overtime[index] = prev;
 		_snake._s += 1;
 		std::cout << "snake is " << _snake._s << " long" << std::endl;
 		growSnakeBody(it - _map_overtime.begin(), prev + 1);
 		*it = prev + 1;
+
+		// faire pop new apple
+		newFood();
+	}
+	else if ( _map_overtime[index] == Game::SNAKE_OBSTACLE) {
+		std::cout << "SNAKE_OBSTACLE" << std::endl;
+		killSnake("OBSTACLE collision.");
 	}
 	else if ( _map_overtime[index] > Game::SNAKE_HEAD) {
 		std::cout << "SNAKE_BODY" << std::endl;
 		killSnake("BODY collision.");
 	}
+}
+
+void				Game::newFood(void)
+{
+	int index = rand() % (_width * _height - 1);
+	if (_map_overtime[index] == 0) {
+		_map_overtime[index] = SNAKE_FOOD_FRESH;
+	}
+	else
+		newFood();
+}
+
+
+void				Game::newObstacle(void)
+{
+	int index = rand() % (_width * _height - 1);
+	if (_map_overtime[index] == 0) {
+		_map_overtime[index] = SNAKE_OBSTACLE;
+	}
+	else
+		newObstacle();
 }
 
 void				Game::growSnakeBody(std::size_t index, int prev)
@@ -200,8 +236,12 @@ void				Game::growSnakeBody(std::size_t index, int prev)
 
 	it = std::find(_map_overtime.begin(), _map_overtime.end(), prev);
 	if (it == _map_overtime.end())
+	{
+		// toutes les 5 apples, obstacle cree
+		if (_snake._s % 5 == 0)
+			newObstacle();
 		return ;
-
+	}
 	_map_overtime[index] = prev;
 	growSnakeBody(it - _map_overtime.begin(), prev + 1);
 	*it = prev + 1;
@@ -215,7 +255,7 @@ void				Game::moveSnakeBody(std::size_t index, int prev)
 	if (it == _map_overtime.end())
 		return ;
 
-	if ( _map_overtime[index] == 0 ) {
+	if ( _map_overtime[index] == EMPTY) {
 		*it = 0;
 		_map_overtime[index] = prev;
 		moveSnakeBody(it - _map_overtime.begin(), prev + 1);

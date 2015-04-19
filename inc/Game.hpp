@@ -43,7 +43,9 @@ public:
 		WALL = 1,
 		SNAKE_FOOD_FRESH = 2,
 		SNAKE_FOOD_NORMAL = 3,
-		SNAKE_FOOD_ROTTEN = 4,
+		SNAKE_FOOD_MATURE = 4,
+		SNAKE_FOOD_ROTTEN = 5,
+		SNAKE_OBSTACLE = 7,
 		SNAKE_HEAD = 11,
 		SNAKE_BODY1 = 12,
 		SNAKE_BODY2 = 13,
@@ -60,6 +62,7 @@ public:
 	int					getWidth(void) const ;
 	int					getHeight(void) const ;
 	Snake::Directions	getSnakeDirection(void) const ;
+	int					getSnakeSize(void) const ;
 	std::vector<int> 	getMap(void) const;
 
 	void				update(void) ;
@@ -74,6 +77,8 @@ private:
 	void				killSnake(std::string message);
 	void				moveSnakeBody(std::size_t, int);
 	void				growSnakeBody(std::size_t, int);
+	void				newFood(void);
+	void				newObstacle(void);
 
 	Game(Game const & obj) { *this = obj; } ;
 	Game &				operator=(Game const & rhs);
@@ -87,15 +92,3 @@ private:
 };
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-

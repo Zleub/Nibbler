@@ -18,10 +18,12 @@
 #include <SFML.hpp>
 #include <IGlib_Exception.hpp>
 #include <IGlib_Event.hpp>
+#include <sstream>
 
 const int &		Game::operator[](std::size_t index) const { return _map_overtime[index]; }
 int				Game::getWidth(void) const { return _width; }
 int				Game::getHeight(void) const { return _height; }
+int				Game::getSnakeSize(void) const { return _snake._s; }
 
 /* * * * * * */
 
@@ -70,14 +72,49 @@ void		SFML::init(Game * game)
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-
 	_window = new sf::RenderWindow(
-		sf::VideoMode(_w * this->_scale * 2, _h * this->_scale * 2),
-		"SFML window",
-		sf::Style::Default,
-		settings
-		);
+		sf::VideoMode(_w * this->_scale * 2, _h * this->_scale * 2), "SFML window", sf::Style::Default, settings);
 	_game = game;
+
+	// FOOD IMAGE
+	if (!this->_apple.loadFromFile("images/apple.png"))	{
+		// erreur...
+		this->_isTextureFood = false;
+		std::cout << "Couldn't load images/apple.png" << std::endl;
+	}
+	else {
+		std::cout << "Texture images/apple.png loaded." << std::endl;
+		this->_isTextureFood = true;
+		this->_apple.setSmooth(true);
+	}
+
+	// OBSTACLE IMAGE
+	if (!this->_obstacle.loadFromFile("images/obstacle.png"))	{
+		// erreur...
+		this->_isTextureObstacle = false;
+		std::cout << "Couldn't load images/obstacle.png" << std::endl;
+	}
+	else {
+		std::cout << "Texture images/obstacle.png loaded." << std::endl;
+		this->_isTextureObstacle = true;
+		this->_obstacle.setSmooth(true);
+	}
+
+	// TEXT
+	if (!this->_font.loadFromFile("fonts/arial.ttf")) {
+		std::cout << "Couldn't load font fonts/arial.ttf." << std::endl;
+		this->_isFont = false;
+	}
+	else {
+		this->_score.setString("Hello");
+		this->_score.setFont(this->_font);
+		this->_score.setCharacterSize(14);
+		this->_score.setPosition(10, 10);
+		this->_score.setColor(sf::Color(255, 255, 0));
+		std::cout << "Font fonts/arial.ttf loaded." << std::endl;
+		this->_isFont = true;
+	}
+
 
 	// GAME MUSIC PLAYED IN A SPECIFIC THREAD
 	std::thread (this->playMusic).detach();
@@ -179,9 +216,23 @@ void		SFML::drawSnake(int part, int x, int y) const
 	_window->draw(quad3);
 }
 
-void		SFML::drawSnakeFood(int x, int y) const
+void		SFML::drawSnakeFood(int x, int y, int food_type) const
 {
+	sf::Color color;
+
+	// FOOD TYPE COLOR
+	if (food_type == Game::SNAKE_FOOD_FRESH)
+		color = sf::Color(10, 255, 10);
+	if (food_type == Game::SNAKE_FOOD_NORMAL)
+		color = sf::Color(255, 255, 10);
+	if (food_type == Game::SNAKE_FOOD_MATURE)
+		color = sf::Color(255, 10, 10);
+	if (food_type == Game::SNAKE_FOOD_ROTTEN)
+		color = sf::Color(139, 69, 19);
+
 	drawFloor(x, y);
+	if (this->_isTextureFood == false)
+	{
 
 	// THIS IS BULLSHIT NOT RESPONSIVE TO SCALE
 	//
@@ -219,19 +270,84 @@ void		SFML::drawSnakeFood(int x, int y) const
 		_window->draw(leaf);
 	//
 	// END
+	}
+	else
+	{
+		sf::Sprite food_sprite;
 
+		food_sprite.setTexture(this->_apple);
+		food_sprite.setPosition(x - 10, y);
+		food_sprite.setScale(0.5, 0.5);
+		food_sprite.setColor(color);
+		_window->draw(food_sprite);
+	}
+}
+
+void		SFML::drawSnakeObstacle(int x, int y) const
+{
+	drawFloor(x, y);
+	if (this->_isTextureObstacle == false)
+	{
+		sf::ConvexShape quad1;
+		quad1.setPointCount(4);
+		quad1.setPoint(0, sf::Vector2f(-_scale, 0));
+		quad1.setPoint(1, sf::Vector2f(0, _scale / 2));
+		quad1.setPoint(2, sf::Vector2f(0, _scale));
+		quad1.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
+		quad1.setPosition(x, y);
+		quad1.setFillColor(sf::Color(204, 204, 204));
+		quad1.setOutlineColor(sf::Color::Black);
+		quad1.setOutlineThickness(0.5);
+		_window->draw(quad1);
+
+		sf::ConvexShape quad2;
+		quad2.setPointCount(4);
+		quad2.setPoint(0, sf::Vector2f(_scale, 0));
+		quad2.setPoint(1, sf::Vector2f(_scale, _scale / 2));
+		quad2.setPoint(2, sf::Vector2f(0, _scale));
+		quad2.setPoint(3, sf::Vector2f(0, _scale / 2));
+		quad2.setPosition(x, y);
+		quad2.setFillColor(sf::Color(150, 150, 150));
+		quad2.setOutlineColor(sf::Color::Black);
+		quad2.setOutlineThickness(0.5);
+		_window->draw(quad2);
+
+		sf::ConvexShape quad3;
+		quad3.setPointCount(4);
+		quad3.setPoint(0, sf::Vector2f(0, 0));
+		quad3.setPoint(1, sf::Vector2f(_scale, _scale / 2));
+		quad3.setPoint(2, sf::Vector2f(0, _scale));
+		quad3.setPoint(3, sf::Vector2f(-_scale, _scale / 2));
+		quad3.setPosition(x, y - _scale / 2);
+		quad3.setOutlineThickness(0.5);
+		quad3.setFillColor(sf::Color(77, 77, 77));
+		quad3.setOutlineColor(sf::Color::Black);
+		_window->draw(quad3);
+	}
+	else
+	{
+		sf::Sprite obstacle_sprite;
+
+		obstacle_sprite.setTexture(this->_obstacle);
+		obstacle_sprite.setPosition(x - 14, y - 4);
+		obstacle_sprite.setScale(1.2, 1.2);
+		obstacle_sprite.setColor(sf::Color(255, 255, 255));
+		_window->draw(obstacle_sprite);
+	}
 }
 
 void		SFML::mdraw(int index, int x, int y) const
 {
 	if ((*_game)[index] == 11)
 		drawSnake(0, x, y);
-	else if ((*_game)[index] == 0)
+	else if ((*_game)[index] == Game::EMPTY)
 		drawFloor(x, y);
-	else if ((*_game)[index] > 11)
+	else if ((*_game)[index] >= Game::SNAKE_HEAD)
 		drawSnake(1, x, y);
-	else if ((*_game)[index] < 11)
-		drawSnakeFood(x, y);
+	else if ((*_game)[index] >= Game::SNAKE_FOOD_FRESH && (*_game)[index] <= Game::SNAKE_FOOD_ROTTEN)
+		drawSnakeFood(x, y, (*_game)[index]);
+	else if ((*_game)[index] == Game::SNAKE_OBSTACLE)
+		drawSnakeObstacle(x, y);
 }
 
 void		SFML::draw(void)
@@ -263,7 +379,11 @@ void		SFML::draw(void)
 		i = middle - ((_scale * y) );
 		j = ((_scale * y) );
 	}
-
+	std::stringstream _str_score;
+	_str_score << "SCORE: ";
+	_str_score << (_game->getSnakeSize() - 4);
+	this->_score.setString(_str_score.str());
+	_window->draw(this->_score);
 	_window->display();
 }
 

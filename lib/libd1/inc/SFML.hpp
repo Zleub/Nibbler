@@ -23,7 +23,6 @@
 //#include <iostream>
 #include <thread>
 
-
 class SFML : public IGlib {
 private:
 	int						_w;
@@ -31,13 +30,21 @@ private:
 	int						_scale;
 	Game					* _game;
 	sf::RenderWindow		* _window;
+	sf::Texture				_apple;
+	sf::Texture				_obstacle;
+	sf::Font				_font;
+	sf::Text				_score;
+	bool					_isFont;
+	bool					_isTextureFood;
+	bool					_isTextureObstacle;
 
 	void					checkError(void) const ;
 	void					assign(void);
 	void					mdraw(int, int, int) const ;
 	void					drawFloor(int x, int y) const ;
 	void					drawSnake(int part, int x, int y) const ;
-	void					drawSnakeFood(int x, int y) const ;
+	void					drawSnakeFood(int x, int y, int food_type) const ;
+	void					drawSnakeObstacle(int x, int y) const ;
 
 public:
 	SFML(void);
