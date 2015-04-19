@@ -70,6 +70,7 @@ void				Game::init(void) {
 	_map_overtime[_width * _height / 2 + 3] = 14;
 	_snake._d = Game::Snake::LEFT;
 	_snake._s = 4;
+	_already_moved = false;
 }
 
 std::string			Game::usage(void) {
@@ -150,24 +151,28 @@ void				Game::update(void) {
 
 		if (e->key == IGlib::ESC)
 			std::cout << "ESC" << std::endl;
-		if (e->key == IGlib::UP && _snake._d != Game::Snake::DOWN) {
+		if (!_already_moved && e->key == IGlib::UP && _snake._d != Game::Snake::DOWN) {
 			std::cout << "UP" << std::endl;
 			_snake._d = Game::Snake::UP;
+			_already_moved = true;
 		}
 
-		if (e->key == IGlib::DOWN && _snake._d != Game::Snake::UP) {
+		if (!_already_moved && e->key == IGlib::DOWN && _snake._d != Game::Snake::UP) {
 			std::cout << "DOWN" << std::endl;
 			_snake._d = Game::Snake::DOWN;
+			_already_moved = true;
 		}
 
-		if (e->key == IGlib::LEFT && _snake._d != Game::Snake::RIGHT) {
+		if (!_already_moved && e->key == IGlib::LEFT && _snake._d != Game::Snake::RIGHT) {
 			std::cout << "LEFT" << std::endl;
 			_snake._d = Game::Snake::LEFT;
+			_already_moved = true;
 		}
 
-		if (e->key == IGlib::RIGHT  && _snake._d != Game::Snake::LEFT) {
+		if (!_already_moved && e->key == IGlib::RIGHT  && _snake._d != Game::Snake::LEFT) {
 			std::cout << "RIGHT" << std::endl;
 			_snake._d = Game::Snake::RIGHT;
+			_already_moved = true;
 		}
 
 		else if (e->key == IGlib::EMPTY)
@@ -302,4 +307,15 @@ void				Game::moveSnake()
 				killSnake("WALL collision.");
 		}
 	}
+	_already_moved = false;
 }
+
+
+
+
+
+
+
+
+
+

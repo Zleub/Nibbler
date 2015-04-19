@@ -89,6 +89,7 @@ private:
 	Snake				_snake;
 	void *				_dl_handle;
 	IGlib *				_glib;
+	bool				_already_moved;
 };
 
 #endif
