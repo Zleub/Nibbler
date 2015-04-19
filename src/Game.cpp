@@ -25,6 +25,8 @@ extern "C" {
 	#include <dlfcn.h>
 }
 
+int		on = true;
+
 Game::Game(void) : _width(11), _height(11) {
 	init();
 }
@@ -88,7 +90,7 @@ std::string			Game::usage(void) {
 }
 
 const int &				Game::operator[](std::size_t index) const { return _map_overtime[index]; }
-bool					Game::isOpen(void) { return _glib->isOpen(); }
+bool					Game::isOpen(void) { return (_glib->isOpen() && on); }
 int						Game::getWidth(void) const { return _width; }
 int						Game::getHeight(void) const { return _height; }
 Game::Snake::Directions	Game::getSnakeDirection(void) const { return _snake._d; }
@@ -271,7 +273,7 @@ void				Game::moveSnakeBody(std::size_t index, int prev)
 void				Game::killSnake(std::string message)
 {
 	std::cout << "Snake just DIED: "<< message << std::endl;
-	exit(0);
+	on = false;
 }
 
 void				Game::moveSnake()

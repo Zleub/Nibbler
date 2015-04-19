@@ -61,6 +61,17 @@ static	void					playMusic(void) ;
 	bool					popEvent(void) ;
 	IGlib::Event const *	getEvent(void) ;
 	void					pushEvent(IGlib::Event *) ;
+	static bool				on;
 };
 
 #endif
+
+
+
+
+
+
+
+
+
+
