@@ -38,8 +38,8 @@ IGlib &		SFML::operator=(IGlib const &)
 
 void		SFML::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
-void		SFML::playMusic(void)
-{
+//void		SFML::playMusic(void)
+//{
 	// GAME MUSIC
 
 	// sf::Music music;
@@ -56,7 +56,7 @@ void		SFML::playMusic(void)
 	// 	;
 	// music.stop();
 	// std::thread (playMusic).detach();
-}
+//}
 
 void		SFML::init(Game * game)
 {
@@ -117,7 +117,7 @@ void		SFML::init(Game * game)
 
 
 	// GAME MUSIC PLAYED IN A SPECIFIC THREAD
-	std::thread (this->playMusic).detach();
+//	std::thread (this->playMusic).detach();
 }
 
 void		SFML::update(void)
