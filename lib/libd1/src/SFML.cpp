@@ -25,7 +25,7 @@ int				Game::getHeight(void) const { return _height; }
 
 /* * * * * * */
 
-SFML::SFML() : _scale(10) {}
+SFML::SFML() : _scale(25) {}
 
 SFML::~SFML() {}
 

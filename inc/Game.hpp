@@ -47,7 +47,7 @@ public:
 		SNAKE_HEAD = 11,
 		SNAKE_BODY1 = 12,
 		SNAKE_BODY2 = 13,
-		SNAKE_BODY2 = 14
+		SNAKE_BODY3 = 14
 	};
 
 	Game(void) ;
@@ -71,6 +71,7 @@ private:
 	void				load(char) ;
 	void				moveSnake(void) ;
 	void				collide(std::size_t, int);
+	void				killSnake(std::string message);
 	void				moveSnakeBody(std::size_t, int);
 	void				growSnakeBody(std::size_t, int);
 

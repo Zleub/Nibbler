@@ -142,22 +142,22 @@ void				Game::update(void) {
 
 		if (e->key == IGlib::ESC)
 			std::cout << "ESC" << std::endl;
-		if (e->key == IGlib::UP) {
+		if (e->key == IGlib::UP && _snake._d != Game::Snake::DOWN) {
 			std::cout << "UP" << std::endl;
 			_snake._d = Game::Snake::UP;
 		}
 
-		if (e->key == IGlib::DOWN) {
+		if (e->key == IGlib::DOWN && _snake._d != Game::Snake::UP) {
 			std::cout << "DOWN" << std::endl;
 			_snake._d = Game::Snake::DOWN;
 		}
 
-		if (e->key == IGlib::LEFT) {
+		if (e->key == IGlib::LEFT && _snake._d != Game::Snake::RIGHT) {
 			std::cout << "LEFT" << std::endl;
 			_snake._d = Game::Snake::LEFT;
 		}
 
-		if (e->key == IGlib::RIGHT) {
+		if (e->key == IGlib::RIGHT  && _snake._d != Game::Snake::LEFT) {
 			std::cout << "RIGHT" << std::endl;
 			_snake._d = Game::Snake::RIGHT;
 		}
@@ -175,18 +175,22 @@ void				Game::collide(std::size_t index, int prev)
 
 	it = std::find(_map_overtime.begin(), _map_overtime.end(), prev);
 
-	if ( _map_overtime[index] == 0 ) {
+	if ( _map_overtime[index] == Game::EMPTY ) {
 		*it = 0;
 		_map_overtime[index] = prev;
 		moveSnakeBody(it - _map_overtime.begin(), prev + 1);
 	}
-	else if ( _map_overtime[index] < 11) {
+	else if ( _map_overtime[index] < Game::SNAKE_HEAD) {
 		std::cout << "SNAKE_FOOD" << std::endl;
 		_map_overtime[index] = prev;
 		_snake._s += 1;
 		std::cout << "snake is " << _snake._s << " long" << std::endl;
 		growSnakeBody(it - _map_overtime.begin(), prev + 1);
 		*it = prev + 1;
+	}
+	else if ( _map_overtime[index] > Game::SNAKE_HEAD) {
+		std::cout << "SNAKE_BODY" << std::endl;
+		killSnake("BODY collision.");
 	}
 }
 
@@ -219,6 +223,12 @@ void				Game::moveSnakeBody(std::size_t index, int prev)
 
 }
 
+void				Game::killSnake(std::string message)
+{
+	std::cout << "Snake just DIED: "<< message << std::endl;
+	exit(0);
+}
+
 void				Game::moveSnake()
 {
 	std::vector<int>::iterator it;
@@ -229,22 +239,27 @@ void				Game::moveSnake()
 	else {
 		int		diff = it - _map_overtime.begin();
 
+
 		if (_snake._d == Game::Snake::LEFT) {
-			if (diff % _width > 0) {
+			if (diff % _width > 0)
 				collide(diff - 1, 11);
-			}
+			else
+				killSnake("WALL collision.");
 		} else if (_snake._d == Game::Snake::RIGHT) {
-			if (diff % _width < _width - 1) {
+			if (diff % _width < _width - 1)
 				collide(diff + 1, 11);
-			}
+			else
+				killSnake("WALL collision.");
 		} else if (_snake._d == Game::Snake::UP) {
-			if ((it - _height - _map_overtime.begin()) >= 0) {
+			if ((it - _height - _map_overtime.begin()) >= 0)
 				collide(diff - _height, 11);
-			}
+			else
+				killSnake("WALL collision.");
 		} else if (_snake._d == Game::Snake::DOWN) {
-			if ((it + _height - _map_overtime.begin()) < _width * _height) {
+			if ((it + _height - _map_overtime.begin()) < _width * _height)
 				collide(diff + _height, 11);
-			}
+			else
+				killSnake("WALL collision.");
 		}
 	}
 }
