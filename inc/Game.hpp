@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-10 15:02:03
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 18:30:57
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:41:11
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -51,6 +51,8 @@ public:
 		SNAKE_BODY2 = 13,
 		SNAKE_BODY3 = 14
 	};
+
+	static int Verbose;
 
 	Game(void) ;
 	Game(int, char**) ;

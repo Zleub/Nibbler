@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 17:48:39
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 19:02:23
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:15:51
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -18,6 +18,8 @@
 
 #include <IGlib.hpp>
 #include <Socket.hpp>
+
+class Socket;
 
 class Love : public IGlib {
 private:

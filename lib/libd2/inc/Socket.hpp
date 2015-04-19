@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-17 19:21:34
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-17 19:57:49
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:15:59
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -19,6 +19,7 @@
 #include <iostream>
 #include <cstring>
 #include <ios>
+#include <LOVE.hpp>
 
 #include "Client.hpp"
 
@@ -29,6 +30,8 @@ extern "C" {
 	#include <netinet/ip.h>
 	#include <arpa/inet.h>
 }
+
+class Love;
 
 class Socket {
 private:
@@ -41,9 +44,10 @@ private:
 	struct sockaddr_in	my_addr;
 	fd_set				active_fd_set;
 	fd_set				read_fd_set;
+	Love				*_L;
 
 public:
-	Socket(std::string, int);
+	Socket(std::string, int, Love *);
 	~Socket(void);
 
 	int					getNbClients(void);

@@ -3,6 +3,8 @@ INCS =	$(subst .cpp,.hpp,$(SRC))
 OBJ =	$(subst .cpp,.o,$(SRC))
 SRC =	src/Socket.cpp\
 		src/Client.cpp\
+		src/IGlib_Event.cpp\
+		src/IGlib_Exception.cpp\
 		src/LOVE.cpp
 
 CC		=	clang++

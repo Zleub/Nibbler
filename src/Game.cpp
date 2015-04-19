@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By adebray - adebray
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-15 20:20:04
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 18:56:28
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:41:26
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -25,6 +25,7 @@ extern "C" {
 	#include <dlfcn.h>
 }
 
+int		Verbose = 0;
 int		on = true;
 
 Game::Game(void) : _width(11), _height(11) {

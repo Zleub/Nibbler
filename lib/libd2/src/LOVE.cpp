@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-18 19:03:59
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:32:42
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -23,20 +23,20 @@ extern "C" {
 #include <LOVE.hpp>
 #include <IGlib_Event.hpp>
 
-IGlib::Event::Event() {}
-IGlib::Event::Event(IGlib::Keys k) { key = k; }
-IGlib::Event::~Event() {}
+// IGlib::Event::Event() {}
+// IGlib::Event::Event(IGlib::Keys k) { key = k; }
+// IGlib::Event::~Event() {}
 
-IGlib::Event::Event(IGlib::Event const & e)
-{
-	key = e.key;
-}
+// IGlib::Event::Event(IGlib::Event const & e)
+// {
+// 	key = e.key;
+// }
 
-IGlib::Event const &		IGlib::Event::operator=(IGlib::Event const & rhs)
-{
-	*this = rhs;
-	return (*this);
-}
+// IGlib::Event const &		IGlib::Event::operator=(IGlib::Event const & rhs)
+// {
+// 	*this = rhs;
+// 	return (*this);
+// }
 
 std::vector<int>			Game::getMap(void) const { return _map_overtime; }
 int							Game::getHeight(void) const { return _height; }
@@ -58,7 +58,8 @@ void		Love::pushEvent(IGlib::Event * k) { _stack.push(k); }
 
 void		Love::init(Game * game)
 {
-	std::cout << "Love init 1: you need love in your PATH" << std::endl;
+	if (Game::Verbose)
+		std::cout << "Love init 1: you need love in your PATH" << std::endl;
 
 	_game = game;
 
@@ -74,25 +75,31 @@ void		Love::init(Game * game)
 	}
 	else if (i > 0)
 	{
-		std::cout << "dad" << std::endl;
-		_socket = new Socket("127.0.0.1", 4242);
+		if (Game::Verbose)
+			std::cout << "dad" << std::endl;
+		_socket = new Socket("127.0.0.1", 4242, this);
 	}
 	else
 	{
-		std::cout << "fork failed" << std::endl;
+		std::cerr << "fork failed" << std::endl;
 		exit(-1);
 	}
 }
 
 void					Love::update(void) {
-	std::cout << "Love::update" << std::endl;
+	if (Game::Verbose)
+		std::cout << "Love::update" << std::endl;
 	_socket->_select();
 }
 
 std::string				Love::makeView(int x, int y) {
-	std::cout << "makeView: x:" << x << " y:" << y << std::endl;
+	if (Game::Verbose)
+		std::cout << "makeView: x:" << x << " y:" << y << std::endl;
 	std::vector<int> map = _game->getMap();
-	std::vector<int>::iterator it = std::find(map.begin(), map.end(), 11);
+	std::vector<int>::iterator it = std::find(map.begin(), map.end(), Game::SNAKE_HEAD);
+	int diff = it - map.begin();
+
+	std::cout << diff << std::endl;
 
 	std::stringstream	ss;
 
@@ -100,15 +107,18 @@ std::string				Love::makeView(int x, int y) {
 	{
 		for(int j = 0 - i; j <= i; ++j)
 		{
+			std::cout << (j) << ":" << (i - 1) << " ";
 			ss << *(it + (y * j) + x * (i - 1)) << ' ';
 		}
+		std::cout << std::endl;
 		ss << ',';
 	}
 	return ss.str();
 }
 
 void					Love::draw(void) {
-	std::cout << "Love::draw" << std::endl;
+	if (Game::Verbose)
+		std::cout << "Love::draw" << std::endl;
 
 	if (_game->getSnakeDirection() == Game::Snake::LEFT)
 		_socket->_write(4, makeView(-1, _game->getHeight()));
@@ -121,8 +131,21 @@ void					Love::draw(void) {
 }
 
 bool					Love::isOpen(void) { if (Love::Closed) return false; else return true; }
-bool					Love::popEvent(void) { return false; }
-IGlib::Event const *	Love::getEvent(void) { return new IGlib::Event(IGlib::EMPTY); }
+
+bool					Love::popEvent(void) {
+	if (_stack.empty())
+		return false;
+	else
+		_stack.pop();
+	return true;
+}
+
+IGlib::Event const *	Love::getEvent(void) {
+	if (!_stack.empty())
+		return _stack.top();
+	else
+		return new IGlib::Event(IGlib::EMPTY);
+}
 
 extern "C"
 {
