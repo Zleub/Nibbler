@@ -43,6 +43,7 @@ void		SFML::playMusic(void)
 	// sf::Music music;
 	// if (!music.openFromFile("music/got.ogg"))
 	// std::cout << "Nibbler (SFML): Could not load game music." << std::endl;
+	// music.SetVolume(32);
 	// music.play();
 
 	// // la musique s'arrete a la sortie de la fonction
