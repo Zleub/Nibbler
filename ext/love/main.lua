@@ -33,21 +33,25 @@ function love.update(dt)
 	if time > timeout then
 		view = {}
 
-		l = {}
+		local l
 		while 42 do
 			local line, err = s:receive('*l')
 			if err == 'closed' then
 				love.event.quit()
+				break
 			end
 			if err == 'timeout' then
-				break ;
+				break
 			end
 
-			table.insert(l, line)
+			print(line, err)
+			if line ~= nil then
+				l = line
+			end
 		end
 
 
-		for i in string.gmatch(l[#l -1], "(.-,)") do
+		for i in string.gmatch(l, "(.-,)") do
 			table.insert(view, {})
 			for j in string.gmatch(i, "[0-9]+") do
 				-- print(j)
@@ -134,6 +138,8 @@ function love.draw()
 				-- if view[i] and view[i][j] then
 					if view[i][j] == '2' then
 						love.graphics.circle('fill', test[i][j].x / 2 + test[i][j + 1].x  / 2, test[i][j].y / 2 + test[i + 1][j].y / 2, 2)
+					elseif view[i][j] == '1' then
+						love.graphics.circle('line', test[i][j].x / 2 + test[i][j + 1].x  / 2, test[i][j].y / 2 + test[i + 1][j].y / 2, 10)
 					end
 				-- end
 			end

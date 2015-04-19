@@ -6,7 +6,7 @@
 // /ddddy:oddddddddds:sddddd/ By Zleub - Zleub
 // sdddddddddddddddddddddddds
 // sdddddddddddddddddddddddds Created: 2015-04-05 16:42:16
-// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 19:32:42
+// :ddddddddddhyyddddddddddd: Modified: 2015-04-19 21:40:46
 //  odddddddd/`:-`sdddddddds
 //   +ddddddh`+dh +dddddddo
 //    -sdddddh///sdddddds-
@@ -39,6 +39,7 @@ extern "C" {
 // }
 
 std::vector<int>			Game::getMap(void) const { return _map_overtime; }
+int							Game::getWidth(void) const { return _width; }
 int							Game::getHeight(void) const { return _height; }
 Game::Snake::Directions		Game::getSnakeDirection(void) const { return _snake._d; }
 
@@ -99,16 +100,20 @@ std::string				Love::makeView(int x, int y) {
 	std::vector<int>::iterator it = std::find(map.begin(), map.end(), Game::SNAKE_HEAD);
 	int diff = it - map.begin();
 
+
 	std::cout << diff << std::endl;
 
 	std::stringstream	ss;
 
 	for (int i = 1; i <= 5; ++i)
 	{
-		for(int j = 0 - i; j <= i; ++j)
+		for(int j = -i; j <= i; ++j)
 		{
-			std::cout << (j) << ":" << (i - 1) << " ";
-			ss << *(it + (y * j) + x * (i - 1)) << ' ';
+			std::cout << (diff + (y * j)) << ":" << (diff + x * (i - 1)) << " ";
+			if ((diff + (y * j)) <= 0 || (diff + x * (i - 1)) <= 0)
+				ss << "1" << ' ';
+			else
+				ss << *(it + (y * j) + x * (i - 1)) << ' ';
 		}
 		std::cout << std::endl;
 		ss << ',';
@@ -121,13 +126,13 @@ void					Love::draw(void) {
 		std::cout << "Love::draw" << std::endl;
 
 	if (_game->getSnakeDirection() == Game::Snake::LEFT)
-		_socket->_write(4, makeView(-1, _game->getHeight()));
+		_socket->_write(4, makeView(-1, -_game->getHeight()));
 	else if (_game->getSnakeDirection() == Game::Snake::RIGHT)
 		_socket->_write(4, makeView(1, _game->getHeight()));
 	else if (_game->getSnakeDirection() == Game::Snake::UP)
 		_socket->_write(4, makeView(-_game->getHeight(), 1));
-	else if (_game->getSnakeDirection() == Game::Snake::UP)
-		_socket->_write(4, makeView(-_game->getHeight(), 1));
+	else if (_game->getSnakeDirection() == Game::Snake::DOWN)
+		_socket->_write(4, makeView(_game->getHeight(), -1));
 }
 
 bool					Love::isOpen(void) { if (Love::Closed) return false; else return true; }
