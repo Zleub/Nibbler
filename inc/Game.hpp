@@ -39,10 +39,15 @@ public:
 	};
 	enum				Cells
 	{
-		EMPTY,
-		SNAKE_HEAD,
-		SNAKE_BODY,
-		SNAKE_FOOD
+		EMPTY = 0,
+		WALL = 1,
+		SNAKE_FOOD_FRESH = 2,
+		SNAKE_FOOD_NORMAL = 3,
+		SNAKE_FOOD_ROTTEN = 4,
+		SNAKE_HEAD = 11,
+		SNAKE_BODY1 = 12,
+		SNAKE_BODY2 = 13,
+		SNAKE_BODY2 = 14
 	};
 
 	Game(void) ;
